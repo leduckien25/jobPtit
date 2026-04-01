@@ -22,7 +22,7 @@
                <p>${j.description}</p>
                <p>${j.location}</p>
 
-               <a href="company?id=1">Xem công ty</a>
+               <a href="company?id=${j.companyId}">Xem công ty</a>
 
                <form action="apply" method="post">
                    <input type="hidden" name="jobId" value="${j.id}">

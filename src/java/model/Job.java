@@ -2,12 +2,17 @@ package model;
 
 public class Job {
     private int id;
+    private int companyId;
     private String title;
     private String description;
     private String location;
 
     public int getId() {
         return id;
+    }
+
+    public int getCompanyId() {
+        return companyId;
     }
 
     public String getTitle() {
@@ -24,6 +29,10 @@ public class Job {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     public void setTitle(String title) {

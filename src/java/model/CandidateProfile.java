@@ -1,6 +1,7 @@
 package model;
 
 public class CandidateProfile {
+    private int id;
     private int userId;
     private String fullName;
     private String title;
@@ -9,6 +10,10 @@ public class CandidateProfile {
     private String aboutMe;
     private String avatarUrl;
     private String cvUrl;
+
+    public int getId() {
+        return id;
+    }
 
     public int getUserId() {
         return userId;
@@ -40,6 +45,10 @@ public class CandidateProfile {
 
     public String getCvUrl() {
         return cvUrl;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setUserId(int userId) {

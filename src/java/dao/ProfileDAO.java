@@ -17,9 +17,34 @@ public class ProfileDAO extends BaseDAO {
                 p.setUserId(userId);
                 p.setFullName(rs.getString("FullName"));
                 p.setTitle(rs.getString("Title"));
+                p.setPhone(rs.getString("Phone"));
+                p.setLocation(rs.getString("Location"));
+                p.setAboutMe(rs.getString("AboutMe"));
+                p.setAvatarUrl(rs.getString("AvatarUrl"));
+                p.setCvUrl(rs.getString("CVUrl"));
                 return p;
             }
         } catch (Exception e) {}
         return null;
+    }
+    
+    public void update(CandidateProfile p) {
+        try {
+            String sql = "UPDATE CandidateProfiles SET FullName=?, Title=?, Phone=?, Location=?, AboutMe=?, AvatarUrl=?, CVUrl=? WHERE UserId=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, p.getFullName());
+            ps.setString(2, p.getTitle());
+            ps.setString(3, p.getPhone());
+            ps.setString(4, p.getLocation());
+            ps.setString(5, p.getAboutMe());
+            ps.setString(6, p.getAvatarUrl());
+            ps.setString(7, p.getCvUrl());
+            ps.setInt(8, p.getUserId());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -15,6 +15,7 @@ public class JobDAO extends BaseDAO {
             while (rs.next()) {
                 Job j = new Job();
                 j.setId(rs.getInt("Id"));
+                j.setCompanyId(rs.getInt("CompanyId"));
                 j.setTitle(rs.getString("Title"));
                 j.setDescription(rs.getString("Description"));
                 j.setLocation(rs.getString("Location"));

@@ -11,17 +11,20 @@
 
         <img src="${profile.avatarUrl}" width="120"><br><br>
 
-        <form method="post" action="profile">
-           Họ tên: <input name="fullName" value="${profile.fullName}"><br><br>
-           Tiêu đề: <input name="title" value="${profile.title}"><br><br>
-           SĐT: <input name="phone" value="${profile.phone}"><br><br>
-           Địa chỉ: <input name="location" value="${profile.location}"><br><br>
+        <form method="post" action="profile" enctype="multipart/form-data">
+            Họ tên: <input name="fullName" value="${profile.fullName}"><br><br>
+            Tiêu đề: <input name="title" value="${profile.title}"><br><br>
+            SĐT: <input name="phone" value="${profile.phone}"><br><br>
+            Địa chỉ: <input name="location" value="${profile.location}"><br><br>
 
-           Giới thiệu:<br>
-           <textarea name="aboutMe">${profile.aboutMe}</textarea><br><br>
+            Giới thiệu:<br>
+            <textarea name="aboutMe">${profile.aboutMe}</textarea><br><br>
 
-           <button>Cập nhật</button>
-        </form>
+            Avatar: <input type="file" name="avatar"><br><br>
+            CV: <input type="file" name="cv"><br><br>
+
+            <button>Cập nhật</button>
+         </form>
 
     </body>
 </html>

@@ -3,34 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/ApplicationDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/index.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/controller/AuthServlet.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/controller/JobServlet.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/BaseDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/company/companyDetail.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/model/User.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/application/myApplications.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/model/CandidateProfile.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/application/applyForm.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/controller/CompanyServlet.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/recruiter/postJob.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/job/jobDetail.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/filer/AuthFilter.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/controller/ProfileServlet.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/companyDetail.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/recruiter/manageJobs.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/JobDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/config/DBConnection.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/model/Company.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/controller/ApplyServlet.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/job/jobList.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/login.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/web/profile/profile.jsp</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/dao/ProfileDAO.java</file>
-            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/WebApplication4/src/java/model/Application.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/web/application/applyForm.jsp</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/dao/BaseDAO.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/model/Job.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/controller/JobServlet.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/controller/ProfileServlet.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/web/profile/profile.jsp</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/model/CandidateProfile.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/web/company/companyDetail.jsp</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/web/job/jobDetail.jsp</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/controller/CompanyServlet.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/web/job/jobList.jsp</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/dao/JobDAO.java</file>
+            <file>file:/D:/Ki_2_nam_3/Lap_trinh_web/jobPtit/src/java/dao/ProfileDAO.java</file>
         </group>
     </open-files>
 </project-private>
