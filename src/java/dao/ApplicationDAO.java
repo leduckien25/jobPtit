@@ -1,0 +1,16 @@
+package dao;
+
+import java.sql.*;
+
+public class ApplicationDAO extends BaseDAO {
+
+    public void apply(int userId, int jobId) {
+        try {
+            String sql = "INSERT INTO Applications(UserId, JobId) VALUES (?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, jobId);
+            ps.executeUpdate();
+        } catch (Exception e) {}
+    }
+}
