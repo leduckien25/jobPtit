@@ -19,7 +19,9 @@ public class ProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException {
-
+        
+        req.setCharacterEncoding("UTF-8"); // nhận tiếng Việt từ form
+        res.setContentType("text/html; charset=UTF-8"); // trả về tiếng Việt
         Object uid = req.getSession().getAttribute("userId");
 
         if (uid == null) {
@@ -37,6 +39,9 @@ public class ProfileServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException {
+
+        req.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html; charset=UTF-8");
 
         // 🔒 check login
         Object uid = req.getSession().getAttribute("userId");
@@ -58,54 +63,44 @@ public class ProfileServlet extends HttpServlet {
         p.setLocation(req.getParameter("location"));
         p.setAboutMe(req.getParameter("aboutMe"));
 
-        // 📁 Upload avatar
+        // 📁 THƯ MỤC UPLOAD
+        String uploadPath = getServletContext().getRealPath("/uploads");
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) uploadDir.mkdirs();
+
+        // ================== AVATAR ==================
         Part avatar = req.getPart("avatar");
         String avatarName = avatar.getSubmittedFileName();
 
         if (avatarName != null && !avatarName.isEmpty()) {
-            String path = getServletContext().getRealPath("/uploads");
 
-            // tạo folder nếu chưa có
-            File dir = new File(path);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            // tránh trùng tên
+            avatarName = new File(avatarName).getName(); // 🔥 fix lỗi trình duyệt
             String fileName = System.currentTimeMillis() + "_" + avatarName;
 
-            avatar.write(path + "/" + fileName);
+            avatar.write(uploadPath + File.separator + fileName);
+
             p.setAvatarUrl("uploads/" + fileName);
-        } else {
-            // giữ avatar cũ
-            if (old != null) {
-                p.setAvatarUrl(old.getAvatarUrl());
-            }
+        } else if (old != null) {
+            p.setAvatarUrl(old.getAvatarUrl());
         }
 
-        // 📁 Upload CV
+        // ================== CV ==================
         Part cv = req.getPart("cv");
         String cvName = cv.getSubmittedFileName();
 
         if (cvName != null && !cvName.isEmpty()) {
-            String path = getServletContext().getRealPath("/uploads");
 
-            File dir = new File(path);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
+            cvName = new File(cvName).getName();
             String fileName = System.currentTimeMillis() + "_" + cvName;
 
-            cv.write(path + "/" + fileName);
+            cv.write(uploadPath + File.separator + fileName);
+
             p.setCvUrl("uploads/" + fileName);
-        } else {
-            // giữ CV cũ
-            if (old != null) {
-                p.setCvUrl(old.getCvUrl());
-            }
+        } else if (old != null) {
+            p.setCvUrl(old.getCvUrl());
         }
 
+        // ================== SAVE ==================
         if (old == null) {
             dao.insert(p);
         } else {
