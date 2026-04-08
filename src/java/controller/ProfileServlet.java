@@ -68,7 +68,7 @@ public class ProfileServlet extends HttpServlet {
             // tạo folder nếu chưa có
             File dir = new File(path);
             if (!dir.exists()) {
-                dir.mkdir();
+                dir.mkdirs();
             }
 
             // tránh trùng tên
@@ -92,7 +92,7 @@ public class ProfileServlet extends HttpServlet {
 
             File dir = new File(path);
             if (!dir.exists()) {
-                dir.mkdir();
+                dir.mkdirs();
             }
 
             String fileName = System.currentTimeMillis() + "_" + cvName;

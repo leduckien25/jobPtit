@@ -9,7 +9,7 @@
     <body>
         <h2>${company.name}</h2>
 
-        <img src="${company.logoUrl}" width="150"><br><br>
+        <img src="${pageContext.request.contextPath}/${company.logoUrl}" width="150">
 
         <p>${company.description}</p>
         <p>Địa điểm: ${company.location}</p>

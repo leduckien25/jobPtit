@@ -4,7 +4,8 @@ public class Application {
     private int id;
     private int userId;
     private int jobId;
-
+    private int status;
+    
     public int getId() {
         return id;
     }

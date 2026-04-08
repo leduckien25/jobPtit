@@ -8,6 +8,10 @@ public class Company {
     private String description;
     private int ownerUserId;
     private boolean isVerified;
+    private int yearsExperience;
+    private int projectsCount;
+    private int countriesCount;
+    private String techStack;
 
     public int getId() {
         return id;
@@ -35,6 +39,22 @@ public class Company {
 
     public boolean isIsVerified() {
         return isVerified;
+    }
+
+    public int getYearsExperience() {
+        return yearsExperience;
+    }
+
+    public int getProjectsCount() {
+        return projectsCount;
+    }
+
+    public int getCountriesCount() {
+        return countriesCount;
+    }
+
+    public String getTechStack() {
+        return techStack;
     }
 
     public void setId(int id) {
@@ -65,9 +85,21 @@ public class Company {
         this.isVerified = isVerified;
     }
 
-    public void setVerified(boolean aBoolean) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setYearsExperience(int yearsExperience) {
+        this.yearsExperience = yearsExperience;
     }
 
+    public void setProjectsCount(int projectsCount) {
+        this.projectsCount = projectsCount;
+    }
+
+    public void setCountriesCount(int countriesCount) {
+        this.countriesCount = countriesCount;
+    }
+
+    public void setTechStack(String techStack) {
+        this.techStack = techStack;
+    }
+    
     
 }

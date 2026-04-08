@@ -22,12 +22,14 @@
                <p>${j.description}</p>
                <p>${j.location}</p>
 
-               <a href="${pageContext.request.contextPath}/company/${j.companyId}"> 
-                   
-               <form action="apply" method="post">
-                   <input type="hidden" name="jobId" value="${j.id}">
-                   <button>Nộp CV</button>
-               </form>
+                <a href="${pageContext.request.contextPath}/company/${j.companyId}">
+                    Xem công ty
+                </a>
+
+                <form action="apply" method="post">
+                    <input type="hidden" name="jobId" value="${j.id}">
+                    <button>Nộp CV</button>
+                </form>
            </div>
         </c:forEach>
 
