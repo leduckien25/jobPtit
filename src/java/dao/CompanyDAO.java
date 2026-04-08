@@ -19,6 +19,8 @@ public class CompanyDAO extends BaseDAO {
                 c.setDescription(rs.getString("Description"));
                 c.setLocation(rs.getString("Location"));
                 c.setLogoUrl(rs.getString("LogoUrl"));
+                c.setOwnerUserId(rs.getInt("OwnerUserId"));
+                c.setVerified(rs.getBoolean("IsVerified"));
                 return c;
             }
         } catch (Exception e) {}

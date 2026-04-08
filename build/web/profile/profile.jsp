@@ -9,7 +9,9 @@
     <body>
         <h2>Hồ sơ ứng viên</h2>
 
-        <img src="${profile.avatarUrl}" width="120"><br><br>
+        <c:if test="${profile != null}">
+            <img src="${profile.avatarUrl}" width="120">
+        </c:if>
 
         <form method="post" action="profile" enctype="multipart/form-data">
             Họ tên: <input name="fullName" value="${profile.fullName}"><br><br>

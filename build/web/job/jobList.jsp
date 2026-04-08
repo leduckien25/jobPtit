@@ -22,8 +22,8 @@
                <p>${j.description}</p>
                <p>${j.location}</p>
 
-               <a href="company?id=${j.companyId}">Xem công ty</a>
-
+               <a href="${pageContext.request.contextPath}/company/${j.companyId}"> 
+                   
                <form action="apply" method="post">
                    <input type="hidden" name="jobId" value="${j.id}">
                    <button>Nộp CV</button>

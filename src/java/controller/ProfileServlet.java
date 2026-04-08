@@ -2,6 +2,7 @@
 package controller;
 
 import dao.ProfileDAO;
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,14 +18,20 @@ import model.CandidateProfile;
 public class ProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
-        int userId = (int) req.getSession().getAttribute("userId");
+        Object uid = req.getSession().getAttribute("userId");
+
+        if (uid == null) {
+            res.sendRedirect("login");
+            return;
+        }
+
+        int userId = (int) uid;
 
         ProfileDAO dao = new ProfileDAO();
         req.setAttribute("profile", dao.getByUserId(userId));
-        
-        
+
         req.getRequestDispatcher("profile/profile.jsp").forward(req, res);
     }
 
@@ -58,7 +65,13 @@ public class ProfileServlet extends HttpServlet {
         if (avatarName != null && !avatarName.isEmpty()) {
             String path = getServletContext().getRealPath("/uploads");
 
-            // tránh trùng tên file
+            // tạo folder nếu chưa có
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+
+            // tránh trùng tên
             String fileName = System.currentTimeMillis() + "_" + avatarName;
 
             avatar.write(path + "/" + fileName);
@@ -77,6 +90,11 @@ public class ProfileServlet extends HttpServlet {
         if (cvName != null && !cvName.isEmpty()) {
             String path = getServletContext().getRealPath("/uploads");
 
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+
             String fileName = System.currentTimeMillis() + "_" + cvName;
 
             cv.write(path + "/" + fileName);
@@ -88,8 +106,11 @@ public class ProfileServlet extends HttpServlet {
             }
         }
 
-        // 💾 update DB
-        dao.update(p);
+        if (old == null) {
+            dao.insert(p);
+        } else {
+            dao.update(p);
+        }
 
         res.sendRedirect("profile");
     }

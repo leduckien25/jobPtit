@@ -4,6 +4,29 @@ import java.sql.*;
 import model.CandidateProfile;
 
 public class ProfileDAO extends BaseDAO {
+    
+    public void insert(CandidateProfile p) {
+        try {
+            String sql = "INSERT INTO CandidateProfiles " +
+                         "(UserId, FullName, Title, Phone, Location, AboutMe, AvatarUrl, CVUrl) " +
+                         "VALUES (?,?,?,?,?,?,?,?)";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, p.getUserId());
+            ps.setString(2, p.getFullName());
+            ps.setString(3, p.getTitle());
+            ps.setString(4, p.getPhone());
+            ps.setString(5, p.getLocation());
+            ps.setString(6, p.getAboutMe());
+            ps.setString(7, p.getAvatarUrl());
+            ps.setString(8, p.getCvUrl());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public CandidateProfile getByUserId(int userId) {
         try {
@@ -14,6 +37,7 @@ public class ProfileDAO extends BaseDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 CandidateProfile p = new CandidateProfile();
+                p.setId(rs.getInt("Id"));
                 p.setUserId(userId);
                 p.setFullName(rs.getString("FullName"));
                 p.setTitle(rs.getString("Title"));
