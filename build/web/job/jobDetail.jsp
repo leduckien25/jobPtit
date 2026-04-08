@@ -18,7 +18,7 @@
         <p>${job.description}</p>
         <p>${job.location}</p>
 
-        <a href="company?id=${job.companyId}">Xem công ty</a>
+        <a href="${pageContext.request.contextPath}/company?id=${job.companyId}">">Xem công ty</a>
 
     </body>
 </html>

@@ -23,7 +23,7 @@ public class ProfileServlet extends HttpServlet {
         Object uid = req.getSession().getAttribute("userId");
 
         if (uid == null) {
-            res.sendRedirect("login");
+            res.sendRedirect("auth");
             return;
         }
 
@@ -41,7 +41,7 @@ public class ProfileServlet extends HttpServlet {
         // 🔒 check login
         Object uid = req.getSession().getAttribute("userId");
         if (uid == null) {
-            res.sendRedirect("login");
+            res.sendRedirect("auth");
             return;
         }
 

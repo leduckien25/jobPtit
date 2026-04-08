@@ -22,7 +22,7 @@
                <p>${j.description}</p>
                <p>${j.location}</p>
 
-                <a href="${pageContext.request.contextPath}/company/${j.companyId}">
+                <a href="${pageContext.request.contextPath}/company?id=${j.companyId}">
                     Xem công ty
                 </a>
 

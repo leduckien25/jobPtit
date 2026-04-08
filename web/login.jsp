@@ -7,10 +7,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form method="post">
-            Email: <input name="email"><br>
-            Pass: <input name="password"><br>
-            <button>Login</button>
+        <form action="${pageContext.request.contextPath}/auth" method="post">
+            Email: <input type="text" name="email" /><br/>
+            Password: <input type="password" name="password" /><br/>
+            <button type="submit">Login</button>
         </form>
     </body>
 </html>
