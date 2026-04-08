@@ -12,6 +12,8 @@
             <file>file:/D:/Workspace/java/jobPtit/src/java/controller/HomeServlet.java</file>
             <file>file:/D:/Workspace/java/jobPtit/src/java/dao/CategoryDao.java</file>
             <file>file:/D:/Workspace/java/jobPtit/web/WEB-INF/views/categoryList.jsp</file>
+            <file>file:/D:/Workspace/java/jobPtit/web/META-INF/context.xml</file>
+            <file>file:/D:/Workspace/java/jobPtit/src/java/controller/CategoryServlet.java</file>
         </group>
     </open-files>
 </project-private>

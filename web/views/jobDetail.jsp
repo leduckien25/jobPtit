@@ -149,15 +149,6 @@
                             %>
                         </div>
                     </div>
-
-                    <div class="job-card p-4">
-                        <h6 class="fw-bold mb-3 small text-uppercase text-muted">Chia sẻ công việc</h6>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary flex-fill"><i class="bi bi-facebook"></i></button>
-                            <button class="btn btn-outline-info flex-fill text-info"><i class="bi bi-linkedin"></i></button>
-                            <button class="btn btn-outline-secondary flex-fill"><i class="bi bi-link-45deg"></i></button>
-                        </div>
-                    </div>
                 </div>
             </div>
 

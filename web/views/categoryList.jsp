@@ -49,7 +49,7 @@
         footer { background: #111827; color: #9ca3af; padding: 60px 0 30px; margin-top: 80px; }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/jobPtit/">
@@ -73,7 +73,7 @@
     </nav>
 
     
-    <main class="container py-5">
+    <main class="container py-5 flex-grow-1"> 
         <div class="text-center mb-5 pb-3">
             <h1 class="display-5 fw-bold text-dark mb-3">Khám phá nghề nghiệp</h1>
             <p class="text-secondary mx-auto" style="max-width: 600px;">Tìm kiếm cơ hội việc làm phù hợp với bạn trong hàng ngàn công việc từ các ngành nghề hot nhất hiện nay.</p>

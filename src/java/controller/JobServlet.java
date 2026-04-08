@@ -140,18 +140,26 @@ public class JobServlet extends HttpServlet {
         request.setAttribute("jobs", existingJobs);
         request.setAttribute("filter", filter);
         
-        request.getRequestDispatcher("/WEB-INF/views/jobList.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/jobList.jsp").forward(request, response);
     }
 
     private void handleDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
         
         int jobId = Integer.parseInt(request.getPathInfo().substring(1));
         
-        Job existingJob = (new JobDao()).getJob(jobId);
+        JobDao jobDao = new JobDao();
+        
+        try {
+            jobDao.IncrementViewsCount(jobId);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace(); // Or handle the error
+        }        
+        Job existingJob = jobDao.getJob(jobId);
+        
         
         request.setAttribute("job", existingJob);
         
-        request.getRequestDispatcher("/WEB-INF/views/jobDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/jobDetail.jsp").forward(request, response);
     }
 
 }

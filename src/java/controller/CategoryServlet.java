@@ -27,6 +27,6 @@ public class CategoryServlet extends HttpServlet {
         Map<Category, Integer> categoryMap = new CategoryDao().getCategoriesWithCount();
         request.setAttribute("categoryMap", categoryMap);
         
-        request.getRequestDispatcher("/WEB-INF/views/categoryList.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/categoryList.jsp").forward(request, response);
     }
 }

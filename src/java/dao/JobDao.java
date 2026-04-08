@@ -22,47 +22,6 @@ import model.Company;
  * @author ducki
  */
 public class JobDao {
-    public List<Job> getJobs() throws SQLException, ClassNotFoundException{
-        Connection conn = (new DBContext()).getConnection();
-        
-        String query = "SELECT * FROM Jobs";
-        
-        PreparedStatement ps = conn.prepareStatement(query);
-        
-        ResultSet rs = ps.executeQuery();
-        
-        List<Job> jobs = new ArrayList<Job>();
-        
-        while(rs.next()){
-            int id = rs.getInt("Id");
-            String title = rs.getString("Title");
-            String description = rs.getString("Description");
-            String location = rs.getString("Location");
-
-            Integer salaryMin = rs.getObject("SalaryMin") != null ? rs.getInt("SalaryMin") : null;
-            Integer salaryMax = rs.getObject("SalaryMax") != null ? rs.getInt("SalaryMax") : null;
-
-            boolean isNegotiable = rs.getBoolean("IsNegotiable");
-
-            int jobType = rs.getInt("JobType");
-            int status = rs.getInt("Status");
-            int categoryId = rs.getInt("CategoryId");
-            int companyId = rs.getInt("CompanyId");
-            int createdByUserId = rs.getInt("CreatedByUserId");
-            int viewsCount = rs.getInt("ViewsCount");
-
-            LocalDateTime createdAt = rs.getTimestamp("CreatedAt").toLocalDateTime();
-            LocalDateTime expiredAt = (rs.getTimestamp("ExpiredAt") != null) ? rs.getTimestamp("ExpiredAt").toLocalDateTime() : null; 
-        
-            Job job = new Job(id, title, description, location, salaryMin, salaryMax, 
-                  isNegotiable, jobType, status, categoryId, companyId, 
-                  createdByUserId, viewsCount, createdAt, expiredAt);
-            
-            jobs.add(job);
-        }
-        return jobs;
-    }
-    
     public List<Job> getJobs(String jobKeyword, String categorySlug, String location) throws ClassNotFoundException, SQLException {
         List<Job> jobs = new ArrayList<>();
 
@@ -70,7 +29,7 @@ public class JobDao {
                        "FROM JOBS J " +
                        "JOIN COMPANIES C ON J.COMPANYID = C.ID " +
                        "JOIN CATEGORIES CT ON J.CATEGORYID = CT.ID " +
-                       "WHERE (CT.SLUG = ? OR ? = 'All') " + 
+                       "WHERE J.Status = 1 AND C.IsVerified = 1 AND (CT.SLUG = ? OR ? = 'All') " + 
                        "  AND J.LOCATION LIKE ? " +
                        "  AND J.TITLE LIKE ?";
 
@@ -120,7 +79,7 @@ public class JobDao {
                 "FROM JOBS J " +
                 "JOIN COMPANIES C ON J.COMPANYID = C.ID " +
                 "JOIN CATEGORIES CT ON J.CATEGORYID = CT.ID " +
-                "WHERE 1=1 "
+                "WHERE J.Status = 1 AND C.IsVerified = 1 "
         );
 
         List<Object> params = new ArrayList<>();
@@ -233,6 +192,20 @@ public class JobDao {
         return jobs;
     }
     
+    public void IncrementViewsCount(int jobId) throws ClassNotFoundException, SQLException {
+    String sql = "UPDATE Jobs SET ViewsCount = ViewsCount + 1 WHERE Id = ?";
+    
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        if (conn == null) {
+            throw new SQLException("DBContext returned a null connection");
+        }
+        
+        ps.setInt(1, jobId);
+        ps.executeUpdate();
+        }
+    }
     
     public List<Job> getRecentJobs(int size) throws SQLException, ClassNotFoundException{
         Connection conn = (new DBContext()).getConnection();
@@ -251,7 +224,7 @@ public class JobDao {
 "    c.LogoUrl \n" +
 "FROM Jobs j \n" +
 "JOIN Companies c ON j.CompanyId = c.Id \n" +
-"WHERE j.Status = 1 -- Only show active jobs\n" +
+"WHERE j.Status = 1 AND c.IsVerified = 1 \n" +
 "ORDER BY j.CreatedAt DESC \n" +
 "LIMIT ?;";
         
@@ -290,7 +263,7 @@ public class JobDao {
                 "FROM JOBS J " +
                 "JOIN COMPANIES C ON J.COMPANYID = C.ID " +
                 "JOIN CATEGORIES CT ON J.CATEGORYID = CT.ID " +
-                "WHERE 1=1 "
+                "WHERE Status = 1 "
         );
 
         List<Object> params = new ArrayList<>();
@@ -358,7 +331,7 @@ public class JobDao {
                        "FROM JOBS J " +
                        "JOIN COMPANIES C ON J.COMPANYID = C.ID " +
                        "JOIN CATEGORIES CT ON J.CATEGORYID = CT.ID " +
-                       "WHERE J.Id = ?";
+                       "WHERE J.Status = 1 AND C.IsVerified = 1 AND J.Id = ?";
 
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
