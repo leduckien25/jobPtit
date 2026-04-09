@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/jobptit/build.xml</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobController.java</file>
+            <file>file:/D:/jobptit/web/WEB-INF/web.xml</file>
+            <file>file:/D:/jobptit/web/views/jobPost.jsp</file>
+            <file>file:/D:/jobptit/web/views/jobManager.jsp</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/models/JobPosting.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobManagerController.java</file>
+            <file>file:/D:/jobptit/nbproject/build-impl.xml</file>
+            <file>file:/D:/jobptit/web/index.html</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/data/DBUtils.java</file>
+            <file>file:/D:/jobptit/web/META-INF/context.xml</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/models/Job.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/dao/JobDAO.java</file>
+            <file>file:/D:/jobptit/build/web/views/jobManager.jsp</file>
+            <file>file:/D:/jobptit/build/web/views/jobPost.jsp</file>
+            <file>file:/D:/jobptit/web/views/jobEdit.jsp</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobEditController.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/models/Category.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/dao/CategoryDAO.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/AuthFilter.java</file>
+            <file>file:/D:/jobptit/src/java/com/jobPtit/utils/ValidateForm.java</file>
+            <file>file:/D:/jobptit/.gitignore</file>
+        </group>
+    </open-files>
+</project-private>
