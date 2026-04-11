@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-	 version="6.0">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>JobController</servlet-name>
-        <servlet-class>com.jobPtit.controllers.JobController</servlet-class>
+        <servlet-class>controllers.JobController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JobManagerController</servlet-name>
-        <servlet-class>com.jobPtit.controllers.JobManagerController</servlet-class>
+        <servlet-class>controllers.JobManagerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JobEditController</servlet-name>
-        <servlet-class>com.jobPtit.controllers.JobEditController</servlet-class>
+        <servlet-class>controllers.JobEditController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>JobController</servlet-name>
         <url-pattern>/job</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>JobManagerController</servlet-name>
-    <url-pattern>/job-manage</url-pattern>
+        <servlet-name>JobManagerController</servlet-name>
+        <url-pattern>/job-manage</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>JobEditController</servlet-name>
         <url-pattern>/job-edit/*</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <welcome-file-list>
         <!--<welcome-file>tmp.jsp</welcome-file>-->
     </welcome-file-list>

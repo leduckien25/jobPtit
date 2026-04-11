@@ -5,7 +5,6 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -18,7 +17,7 @@
             theme: {
                 extend: {
                     colors: {
-                        'ptit-red': '#C8102E', // Màu đỏ đặc trưng PTIT
+                        'ptit-red': '#C8102E',
                     }
                 }
             }
@@ -37,7 +36,7 @@
                 <div class="container mx-auto px-4">
                     <div class="flex justify-between items-center h-20">
                         <div class="flex items-center">
-                            <a class="flex items-center gap-2" href="${pageContext.request.contextPath}/home">
+                            <a class="flex items-center gap-2" href="${pageContext.request.contextPath}/job-manage">
                                 <div class="w-10 h-10 bg-ptit-red rounded-full flex items-center justify-center text-white font-bold text-xl">P</div>
                                 <div class="flex flex-col">
                                     <span class="text-ptit-red font-bold text-xl leading-none">JOBS</span>
@@ -67,8 +66,7 @@
                             <div class="lg:col-span-1 space-y-6">
                                 <div class="space-y-2">
                                     <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition bg-ptit-red text-white shadow-lg shadow-red-100" href="#">Tin tuyển dụng</a>
-                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="#">Thống kê</a>
-                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="#">Hồ sơ công ty</a>
+                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="${pageContext.request.contextPath}/company">Hồ sơ công ty</a>
                                 </div>
                             </div>
 
@@ -85,7 +83,6 @@
                                     </a>
                                 </div>
 
-                                <%-- Thẻ thống kê nhanh --%>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                                         <div class="text-3xl font-bold text-gray-900">${totalJobs}</div>
@@ -105,7 +102,6 @@
                                     </div>
                                 </div>
 
-                                <%-- Thông báo từ Session --%>
                                 <c:if test="${not empty sessionScope.message}">
                                     <div class="p-4 mb-6 rounded-xl flex items-center gap-3 shadow-sm border 
                                         ${sessionScope.msgType == 'success' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-700 border-red-200'}">
@@ -116,7 +112,6 @@
                                     </div>
                                 </c:if>
 
-                                <%-- Form tìm kiếm --%>
                                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
                                     <form action="${pageContext.request.contextPath}/job-manage" method="GET" class="flex flex-col md:flex-row gap-4">
                                         <div class="flex-grow relative">
@@ -125,19 +120,19 @@
                                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                                 </svg>
                                             </div>
-                                            <input type="text" name="searchTitle" value="${param.searchTitle}"
+                                            <input type="text" name="searchTitle" value="${searchTitle}"
                                                    class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl focus:ring-ptit-red focus:border-ptit-red text-sm" 
                                                    placeholder="Tìm theo tiêu đề công việc...">
                                         </div>
                                         <div class="md:w-1/4 relative">
-                                            <input type="text" name="searchLocation" value="${param.searchLocation}"
+                                            <input type="text" name="searchLocation" value="${searchLocation}"
                                                    class="block w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-ptit-red focus:border-ptit-red text-sm" 
                                                    placeholder="Địa điểm...">
                                         </div>
                                         <button type="submit" class="px-6 py-2.5 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition shadow-sm">
                                             Tìm kiếm
                                         </button>
-                                        <c:if test="${not empty param.searchTitle || not empty param.searchLocation}">
+                                        <c:if test="${not empty searchTitle || not empty searchLocation}">
                                             <a href="${pageContext.request.contextPath}/job-manage" class="px-4 py-2.5 text-gray-500 hover:text-ptit-red flex items-center justify-center text-sm font-medium">
                                                 Xóa lọc
                                             </a>
@@ -145,22 +140,17 @@
                                     </form>
                                 </div>
 
-                                <%-- Danh sách tin tuyển dụng dùng JSTL --%>
                                 <div class="space-y-4">
                                     <c:choose>
                                         <c:when test="${not empty jobs}">
                                             <c:forEach items="${jobs}" var="j">
                                                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
                                                     <div class="flex flex-col md:flex-row md:items-center gap-4">
-                                                        <div class="flex-1 min-w-0"> <%-- Quan trọng: min-w-0 giúp flex con có thể co lại để truncate --%>
-
-                                                            <%-- Container chứa Title và Tag cùng hàng --%>
+                                                        <div class="flex-1 min-w-0">
                                                             <div class="flex items-center gap-3 w-full">
                                                                 <h3 class="text-lg font-bold text-gray-900 truncate" title="${j.title}">
                                                                     ${j.title}
                                                                 </h3>
-
-                                                                <%-- Tag trạng thái (Cố định, không bị co lại) --%>
                                                                 <div class="flex-shrink-0">
                                                                     <c:choose>
                                                                         <c:when test="${j.status == 1}">
@@ -177,22 +167,13 @@
                                                                 </div>
                                                             </div>
 
-                                                            <%-- Thông tin phụ bên dưới --%>
                                                             <div class="flex gap-4 text-sm text-gray-500 mt-2">
                                                                 <span class="inline-block max-w-[150px] truncate" title="${j.location}">
                                                                     ${j.location}
                                                                 </span> • 
-                                                                <c:choose>
-                                                                    <c:when test="${j.negotiable == 1}">
-                                                                        <span class="text-ptit-red font-medium">Thỏa thuận</span> • 
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <span>
-                                                                            <fmt:formatNumber value="${j.salaryMin / 1000000}" maxFractionDigits="1"/> - 
-                                                                            <fmt:formatNumber value="${j.salaryMax / 1000000}" maxFractionDigits="1"/> triệu
-                                                                        </span> • 
-                                                                    </c:otherwise>
-                                                                </c:choose>
+                                                                <span class="font-medium ${j.negotiable == 1 ? 'text-ptit-red' : ''}">
+                                                                    ${j.salaryRangeFormatted}
+                                                                </span> • 
                                                                 <span>
                                                                     <c:choose>
                                                                         <c:when test="${j.jobType == 1}">FullTime</c:when>
@@ -208,13 +189,11 @@
                                                                 </span>
                                                                <span class="flex items-center gap-1">
                                                                     <span class="font-medium text-gray-500">Hạn nộp:</span> 
-                                                                    <%-- Gọi thẳng hàm getDeadlineFormatted() --%>
-                                                                    ${j.deadlineFormatted} 
+                                                                    <span>${j.deadlineFormatted}</span> 
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                                    
-                                                        <%-- Phần chỉ số bên phải --%>
+                                                        
                                                         <div class="flex items-center gap-4 flex-shrink-0">
                                                             <div class="text-center">
                                                                 <div class="font-bold text-gray-900">342</div>
@@ -243,7 +222,6 @@
                                         </c:otherwise>
                                     </c:choose>
 
-                                    <%-- Phân trang --%>
                                     <div class="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-gray-200 pt-6">
                                         <p class="text-sm text-gray-500">
                                             Hiển thị <span class="font-bold text-gray-900">${jobs.size()}</span> tin tuyển dụng

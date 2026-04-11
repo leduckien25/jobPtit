@@ -4,27 +4,52 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/jobptit/build.xml</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobController.java</file>
-            <file>file:/D:/jobptit/web/WEB-INF/web.xml</file>
-            <file>file:/D:/jobptit/web/views/jobPost.jsp</file>
-            <file>file:/D:/jobptit/web/views/jobManager.jsp</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/models/JobPosting.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobManagerController.java</file>
             <file>file:/D:/jobptit/nbproject/build-impl.xml</file>
             <file>file:/D:/jobptit/web/index.html</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/data/DBUtils.java</file>
             <file>file:/D:/jobptit/web/META-INF/context.xml</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/models/Job.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/dao/JobDAO.java</file>
             <file>file:/D:/jobptit/build/web/views/jobManager.jsp</file>
             <file>file:/D:/jobptit/build/web/views/jobPost.jsp</file>
-            <file>file:/D:/jobptit/web/views/jobEdit.jsp</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/JobEditController.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/models/Category.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/dao/CategoryDAO.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/controllers/AuthFilter.java</file>
-            <file>file:/D:/jobptit/src/java/com/jobPtit/utils/ValidateForm.java</file>
-            <file>file:/D:/jobptit/.gitignore</file>
+            <file>file:/D:/jobptit/build/web/views/jobEdit.jsp</file>
+            <file>file:/D:/jobptit/web/WEB-INF/web.xml</file>
+            <file>file:/D:/jobptit/build/web/META-INF/context.xml</file>
+            <file>file:/D:/jobptit/nbproject/genfiles.properties</file>
+            <file>file:/D:/jobptit/nbproject/project.properties</file>
+            <file>file:/D:/jobptit/nbproject/project.xml</file>
+            <file>file:/D:/jobptit/src/java/controllers/JobController.java</file>
+            <file>file:/D:/jobptit/src/java/controllers/JobEditController.java</file>
+            <file>file:/D:/jobptit/src/java/controllers/JobManagerController.java</file>
+            <file>file:/D:/jobptit/src/java/utils/ValidateForm.java</file>
+            <file>file:/D:/jobptit/src/java/dao/JobDAO.java</file>
+            <file>file:/D:/jobptit/src/java/dao/CategoryDAO.java</file>
+            <file>file:/D:/jobptit/src/java/models/Job.java</file>
+            <file>file:/D:/jobptit/src/java/models/Category.java</file>
+            <file>file:/D:/jobptit/src/java/models/JobPosting.java</file>
+            <file>file:/D:/jobptit/src/java/data/DBUtils.java</file>
+            <file>file:/D:/jobptit/web/views/jobPost.jsp</file>
+            <file>file:/D:/jobptit/web/views/jobManager.jsp</file>
+            <file>file:/D:/jobptit/web/application/applyForm.jsp</file>
+            <file>file:/D:/jobptit/web/application/myApplication.jsp</file>
+            <file>file:/D:/jobptit/web/company/companyDetail.jsp</file>
+            <file>file:/D:/jobptit/web/job/jobDetail.jsp</file>
+            <file>file:/D:/jobptit/web/job/jobList.jsp</file>
+            <file>file:/D:/jobptit/web/profile/profile.jsp</file>
+            <file>file:/D:/jobptit/web/recruiter/manageJobs.jsp</file>
+            <file>file:/D:/jobptit/src/java/models/Application.java</file>
+            <file>file:/D:/jobptit/src/java/models/CandidateProfile.java</file>
+            <file>file:/D:/jobptit/src/java/models/Company.java</file>
+            <file>file:/D:/jobptit/src/java/dao/ApplicationDAO.java</file>
+            <file>file:/D:/jobptit/src/java/dao/BaseDAO.java</file>
+            <file>file:/D:/jobptit/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/jobptit/src/java/dao/ProfileDAO.java</file>
+            <file>file:/D:/jobptit/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/jobptit/src/java/models/User.java</file>
+            <file>file:/D:/jobptit/src/java/controllers/ApplyServlet.java</file>
+            <file>file:/D:/jobptit/src/java/controllers/CompanyServlet.java</file>
+            <file>file:/D:/jobptit/src/java/controllers/ProfileServlet.java</file>
+            <file>file:/D:/jobptit/src/java/filter/AuthFilter.java</file>
+            <file>file:/D:/jobptit/web/login.jsp</file>
+            <file>file:/D:/jobptit/web/register.jsp</file>
+            <file>file:/D:/jobptit/src/java/controllers/AuthServlet.java</file>
         </group>
     </open-files>
 </project-private>
