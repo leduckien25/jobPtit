@@ -35,8 +35,7 @@ public class AdminFilter implements Filter {
 
         if (user.getRole() != 3) {
             // Không phải Admin -> Báo lỗi 403 (Cấm truy cập)
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, 
-                    "CẢNH BÁO: Bạn không có quyền truy cập khu vực Quản trị viên hệ thống!");
+            request.getRequestDispatcher("/views/error/forbidden.jsp").forward(request, response);
             return; 
         }
 

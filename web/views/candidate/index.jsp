@@ -5,6 +5,10 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -61,7 +65,7 @@
                 </ul>
                 <div class="d-flex align-items-center">
                     <button class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</button>
-                    <a href="#" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
+                    <a href="${pageContext.request.contextPath}/auth/logout" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
                 </div>
             </div>
         </div>

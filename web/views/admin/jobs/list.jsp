@@ -172,7 +172,7 @@
                                 
                                 <span><i class="fas fa-dollar-sign"></i> 
                                     <c:choose>
-                                        <c:when test="${j.isNegotiable == 1}">Thỏa thuận</c:when>
+                                        <c:when test="${j.isNegotiable == true}">Thỏa thuận</c:when>
                                         <c:when test="${not empty j.salaryMin and not empty j.salaryMax}">${j.salaryMin} - ${j.salaryMax} triệu</c:when>
                                         <c:otherwise>Không công bố</c:otherwise>
                                     </c:choose>
@@ -194,8 +194,11 @@
                             </div>
                             
                             <div class="card-dates">
-                                <div>Đăng: <fmt:formatDate value="${j.createdAt}" pattern="dd-MM-yyyy"/></div>
-                                <div>Hạn: <fmt:formatDate value="${j.expiredAt}" pattern="dd-MM-yyyy"/></div>
+                                <fmt:parseDate value="${j.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreate" type="both" />
+                                <div>Đăng ngày: <fmt:formatDate value="${parsedCreate}" pattern="yyyy-MM-dd"/></div>
+
+                                <fmt:parseDate value="${j.expiredAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedExpire" type="both" />
+                                <div>Hết hạn: <fmt:formatDate value="${parsedExpire}" pattern="yyyy-MM-dd"/></div>
                             </div>
                             
                             <div class="card-actions">

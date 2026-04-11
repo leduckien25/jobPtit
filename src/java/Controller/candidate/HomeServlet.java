@@ -42,8 +42,7 @@ public class HomeServlet extends HttpServlet {
 
         if (user.getRole() != 1) {
             // Không phải Admin -> Báo lỗi 403 (Cấm truy cập)
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, 
-                    "CẢNH BÁO: Bạn không có quyền truy cập khu vực này!");
+            request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
             return; 
         }
         

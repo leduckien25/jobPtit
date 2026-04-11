@@ -21,7 +21,7 @@ public class CategoryDAO {
 
         String query = "SELECT c.id, c.name, c.slug, COUNT(j.id) AS TotalJobs " 
                     + "FROM categories c "
-                    + "LEFT JOIN jobs j ON c.id = j.categoryid "
+                    + "LEFT JOIN jobs j ON c.id = j.categoryid AND j.Status = 1 "
                     + "GROUP BY c.id, c.name, c.slug " 
                     + "ORDER BY TotalJobs DESC "
                     + "LIMIT ?";
@@ -49,7 +49,7 @@ public class CategoryDAO {
     public Map<Category, Integer> getCategoriesWithCount(){
         Map<Category, Integer> results = new LinkedHashMap<>();
             
-        String query = "SELECT C.*, COUNT(J.Id) AS TotalJobs FROM Categories C LEFT JOIN Jobs J ON C.Id = J.CategoryId GROUP BY C.Id, C.Name;";
+        String query = "SELECT C.*, COUNT(J.Id) AS TotalJobs FROM Categories C LEFT JOIN Jobs J ON C.Id = J.CategoryId AND J.Status=1  GROUP BY C.Id, C.Name;";
 
         try (Connection conn = new DBConnection().getConnection()){
             PreparedStatement ps = conn.prepareStatement(query);

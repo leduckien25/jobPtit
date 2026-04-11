@@ -149,7 +149,7 @@
                             <div class="job-tag tag-salary">
                                 <i class="fas fa-dollar-sign"></i> 
                                 <c:choose>
-                                    <c:when test="${job.isNegotiable == 1}">Thỏa thuận</c:when>
+                                    <c:when test="${job.isNegotiable == true}">Thỏa thuận</c:when>
                                     <c:when test="${not empty job.salaryMin}">${job.salaryMin} - ${job.salaryMax} Triệu</c:when>
                                     <c:otherwise>Không công bố</c:otherwise>
                                 </c:choose>
@@ -158,7 +158,9 @@
                                 <i class="fas fa-map-marker-alt"></i> ${empty job.location ? 'Chưa cập nhật' : job.location}
                             </div>
                             <div class="job-tag">
-                                <i class="far fa-clock"></i> Hạn nộp: <fmt:formatDate value="${job.expiredAt}" pattern="dd/MM/yyyy"/>
+                           
+                                <fmt:parseDate value="${j.expiredAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedExpire" type="both" />
+                                <div>Hết hạn: <fmt:formatDate value="${parsedExpire}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </div>
 

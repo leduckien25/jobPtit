@@ -22,7 +22,8 @@ public class AuthFilter implements Filter {
     // Danh sách các trang cho phép vào thoải mái không cần đăng nhập
     private static final Set<String> PUBLIC_URLS = new HashSet<>(Arrays.asList(
             "/auth/login",
-            "/auth/register"
+            "/auth/register",
+            "/auth/forgot-password"
     ));
 
     // Các thư mục chứa file thiết kế (CSS, ảnh) - Bắt buộc phải cho qua

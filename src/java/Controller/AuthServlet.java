@@ -7,6 +7,7 @@ package Controller;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,9 +25,21 @@ public class AuthServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         switch (action(req)) {
-            case "login"    -> forward(req, resp, "/views/auth/login.jsp");
+            case "login"    ->{
+                // --- THÊM ĐOẠN NÀY ĐỂ ĐỌC COOKIE ---
+                Cookie[] cookies = req.getCookies();
+                if (cookies != null) {
+                    for (Cookie c : cookies) {
+                        if (c.getName().equals("savedEmail")) req.setAttribute("savedEmail", c.getValue());
+                        if (c.getName().equals("savedPass")) req.setAttribute("savedPass", c.getValue());
+                        if (c.getName().equals("savedRemember")) req.setAttribute("savedRemember", "checked");
+                    }
+                } 
+                forward(req, resp, "/views/auth/login.jsp");
+            }
             case "register" -> forward(req, resp, "/views/auth/register.jsp");
             case "logout"   -> logout(req, resp);
+            case "forgot-password" -> forward(req,resp,"/views/auth/forgot-password.jsp");
             default         -> resp.sendRedirect(req.getContextPath() + "/auth/login");
         }
     }
@@ -44,12 +57,15 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-    private void Login(HttpServletRequest req, HttpServletResponse resp)
+   private void Login(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         // Dùng biến email thay vì username
         String email = trim(req.getParameter("email")); 
         String password = req.getParameter("password");
+        
+        // Nhận giá trị từ ô checkbox "Ghi nhớ đăng nhập"
+        String remember = req.getParameter("remember"); 
 
         if (blank(email) || blank(password)) {
             req.setAttribute("error", "Vui lòng nhập đầy đủ email và mật khẩu.");
@@ -71,6 +87,38 @@ public class AuthServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
         session.setAttribute("LOGIN_USER", user);
         session.setMaxInactiveInterval(30 * 60); // 30 phút
+
+        // ==========================================
+        // KHỐI CODE MỚI: XỬ LÝ GHI NHỚ ĐĂNG NHẬP (COOKIE)
+        // ==========================================
+        if (remember != null) { // Nếu người dùng CÓ tích vào ô Ghi nhớ
+            Cookie cookieEmail = new Cookie("savedEmail", email);
+            Cookie cookiePass = new Cookie("savedPass", password);
+            Cookie cookieRemember = new Cookie("savedRemember", "true");
+            
+            // Thời gian sống: 7 ngày
+            int maxAge = 7 * 24 * 60 * 60;
+            cookieEmail.setMaxAge(maxAge);
+            cookiePass.setMaxAge(maxAge);
+            cookieRemember.setMaxAge(maxAge);
+            
+            resp.addCookie(cookieEmail);
+            resp.addCookie(cookiePass);
+            resp.addCookie(cookieRemember);
+        } else { // Nếu KHÔNG tích -> Tiêu hủy Cookie cũ (nếu có)
+            Cookie cookieEmail = new Cookie("savedEmail", "");
+            Cookie cookiePass = new Cookie("savedPass", "");
+            Cookie cookieRemember = new Cookie("savedRemember", "");
+            
+            cookieEmail.setMaxAge(0);
+            cookiePass.setMaxAge(0);
+            cookieRemember.setMaxAge(0);
+            
+            resp.addCookie(cookieEmail);
+            resp.addCookie(cookiePass);
+            resp.addCookie(cookieRemember);
+        }
+        // ==========================================
 
         // 1. Lấy đường dẫn cũ đã lưu trong Session (nếu có)
         String savedRedirect = (String) session.getAttribute("redirectAfterLogin");
@@ -154,6 +202,7 @@ public class AuthServlet extends HttpServlet {
         if (session != null) session.invalidate();
         resp.sendRedirect(req.getContextPath() + "/auth/login");
     }
+    
 
     // ── Helpers ───────────────────────────────────────────────────────────────
     private String action(HttpServletRequest req) {

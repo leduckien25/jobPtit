@@ -165,13 +165,13 @@
                 </div>
             </c:if>
 
-            <form class="login-form" action="${pageContext.request.contextPath}/auth/login" method="post">
+           <form class="login-form" action="${pageContext.request.contextPath}/auth/login" method="post">
                 <div class="form-group">
                     <label class="form-label" for="email">Email</label>
                     <div class="input-wrap">
                         <i class="far fa-envelope"></i>
                         <input type="email" id="email" name="email" class="form-control"
-                               value="${email}" placeholder="email@ptit.edu.vn" required autofocus>
+                               value="${not empty email ? email : savedEmail}" placeholder="email@ptit.edu.vn" required autofocus>
                     </div>
                 </div>
 
@@ -180,15 +180,15 @@
                     <div class="input-wrap">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="password" name="password" class="form-control"
-                               placeholder="••••••••" required>
+                               value="${savedPass}" placeholder="••••••••" required>
                     </div>
                 </div>
 
                 <div class="form-options">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="remember"> Ghi nhớ đăng nhập
+                        <input type="checkbox" name="remember" ${savedRemember}> Ghi nhớ mật khẩu
                     </label>
-                    <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                    <a href="${pageContext.request.contextPath}/auth/forgot-password" class="forgot-link">Quên mật khẩu?</a>
                 </div>
 
                 <button type="submit" class="btn-submit">
