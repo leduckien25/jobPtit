@@ -1,7 +1,10 @@
 
 package model;
 import java.sql.Timestamp;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Job {
     private int id;
@@ -27,6 +30,20 @@ public class Job {
     private String companyName;
     private String companyLogo;
     private Company company;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getInstance(new Locale("vi", "VN"));
+    public Job(String title, String location, String description, int salaryMax, int salaryMin, int jobType, int status, int categoryId, boolean negotiable, LocalDateTime deadline) {
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.salaryMax = salaryMax;
+        this.salaryMin = salaryMin;
+        this.jobType = jobType;
+        this.status = status;
+        this.categoryId = categoryId;
+        this.isNegotiable = negotiable;
+        this.expiredAt = deadline;
+    }
 
     public Company getCompany() {
         return company;
@@ -154,7 +171,29 @@ public class Job {
     public LocalDateTime getExpiredAt() {
         return expiredAt;
     }
-
+    public String getSalaryRangeFormatted() {
+        if (this.isNegotiable) {
+            return "Thỏa thuận";
+        }
+        
+        double min = (double) salaryMin / 1000000;
+        double max = (double) salaryMax / 1000000;
+        
+        if (min == max) {
+            return String.format("%.0f triệu", min);
+        }
+        return String.format("%.0f - %.0f triệu", min, max);
+    }
+    public String getCreatedAtFormatted() {
+        return (createdAt != null) ? createdAt.format(DATE_FORMATTER) : "N/A";
+    }
+    public String getDeadlineFormatted() {
+        return (expiredAt != null) ? expiredAt.toLocalDate().format(DATE_FORMATTER) : "N/A";
+    }
+    public String getExpiredAtDateOnly() {
+        if (this.expiredAt == null) return "";
+        return this.expiredAt.toLocalDate().toString(); 
+    }
     public void setExpiredAt(LocalDateTime expiredAt) {
         this.expiredAt = expiredAt;
     }

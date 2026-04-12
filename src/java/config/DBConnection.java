@@ -12,7 +12,7 @@ public class DBConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/JobPtit?autoReconnect=true&useSSL=false";
             String username = "root";
-            String password = "Huyle2005@";
+            String password = "1NG@huuduc0";
             
             con = DriverManager.getConnection(url, username, password);
             

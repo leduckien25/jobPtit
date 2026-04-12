@@ -9,7 +9,6 @@ import model.Company;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 
 public class CompanyDAO {
     private Company mapRow(ResultSet rs) throws SQLException {
@@ -48,6 +47,7 @@ public class CompanyDAO {
         }
     }
     
+    
     public Company findById(int id) {
         String sql = "SELECT * FROM Companies WHERE Id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -62,6 +62,19 @@ public class CompanyDAO {
         return null;
     }
     
+    public Company findByOwnedId(int id) {
+        String sql = "SELECT * FROM Companies WHERE OwnerUserId = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public boolean approve(int id) {
         String sql = "UPDATE Companies SET IsVerified = 1 WHERE Id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -165,5 +178,33 @@ public class CompanyDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+     public Company getById(int id) {
+        try {
+            String sql = "SELECT * FROM Companies WHERE Id=?";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Company c = new Company();
+                c.setId(id);
+                c.setName(rs.getString("Name"));
+                c.setDescription(rs.getString("Description"));
+                c.setLocation(rs.getString("Location"));
+                c.setLogoUrl(rs.getString("LogoUrl"));
+                c.setOwnerUserId(rs.getInt("OwnerUserId"));
+                c.setIsVerified(rs.getInt("IsVerified"));
+//                c.setYearsExperience(rs.getInt("YearsExperience"));
+//                c.setProjectsCount(rs.getInt("ProjectsCount"));
+//                c.setCountriesCount(rs.getInt("CountriesCount"));
+//                c.setTechStack(rs.getString("TechStack"));
+                return c;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

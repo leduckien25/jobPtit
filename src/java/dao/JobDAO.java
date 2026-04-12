@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Company;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 
 public class JobDAO {
@@ -514,5 +516,523 @@ public class JobDAO {
         }
         
         return null;
+    }
+    public List<Job> getAllJobs(int id) {
+      List<Job> list = new ArrayList();
+      String sql = "SELECT * FROM Jobs WHERE CompanyId = ? ORDER BY CreatedAt DESC";
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            
+            try {
+               ResultSet rs = pstmt.executeQuery();
+               Job job;
+               try {
+                  for(; rs.next(); list.add(job)) {
+                     job = new Job();
+                     job.setId(rs.getInt("Id"));
+                     job.setTitle(rs.getString("Title"));
+                     job.setLocation(rs.getString("Location"));
+                     job.setSalaryMin(rs.getInt("SalaryMin"));
+                     job.setSalaryMax(rs.getInt("SalaryMax"));
+                     job.setJobType(rs.getInt("JobType"));
+                     job.setStatus(rs.getInt("Status"));
+                     job.setCategoryId(rs.getInt("CategoryId"));
+                     job.setDescription(rs.getString("Description"));
+                     job.setIsNegotiable(rs.getBoolean("IsNegotiable"));
+                     Timestamp sqlDate = rs.getTimestamp("ExpiredAt");
+                     if (sqlDate != null) {
+                        job.setExpiredAt(sqlDate.toLocalDateTime());
+                     } else {
+                        job.setExpiredAt(null);
+                     }
+                  }
+               } catch (SQLException var11) {
+                  if (rs != null) {
+                     try {
+                        rs.close();
+                     } catch (SQLException var10) {
+                        var11.addSuppressed(var10);
+                     }
+                  }
+
+                  throw var11;
+               }
+
+               if (rs != null) {
+                  rs.close();
+               }
+            } catch (SQLException var12) {
+               if (pstmt != null) {
+                  try {
+                     pstmt.close();
+                  } catch (SQLException var9) {
+                     var12.addSuppressed(var9);
+                  }
+               }
+
+               throw var12;
+            }
+
+            if (pstmt != null) {
+               pstmt.close();
+            }
+         } catch (SQLException var13) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var8) {
+                  var13.addSuppressed(var8);
+               }
+            }
+
+            throw var13;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+      } catch (SQLException var14) {
+         var14.printStackTrace();
+      }
+
+      return list;
+   }
+
+   public Job getJobById(int id) {
+      String sql = "SELECT * FROM Jobs WHERE Id = ?";
+      Job job = null;
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            try {
+               pstmt.setInt(1, id);
+               ResultSet rs = pstmt.executeQuery();
+
+               try {
+                  if (rs.next()) {
+                     job = new Job();
+                     job.setId(rs.getInt("Id"));
+                     job.setTitle(rs.getString("Title"));
+                     job.setLocation(rs.getString("Location"));
+                     job.setSalaryMin(rs.getInt("SalaryMin"));
+                     job.setSalaryMax(rs.getInt("SalaryMax"));
+                     job.setJobType(rs.getInt("JobType"));
+                     job.setStatus(rs.getInt("Status"));
+                     job.setCategoryId(rs.getInt("CategoryId"));
+                     job.setDescription(rs.getString("Description"));
+                     job.setIsNegotiable(rs.getBoolean("IsNegotiable"));
+                     Timestamp sqlDate = rs.getTimestamp("ExpiredAt");
+                     if (sqlDate != null) {
+                        job.setExpiredAt(sqlDate.toLocalDateTime());
+                     } else {
+                        job.setExpiredAt(null);
+                     }
+
+                     System.out.println(job.toString());
+                  }
+               } catch (SQLException var12) {
+                  if (rs != null) {
+                     try {
+                        rs.close();
+                     } catch (SQLException var11) {
+                        var12.addSuppressed(var11);
+                     }
+                  }
+
+                  throw var12;
+               }
+
+               if (rs != null) {
+                  rs.close();
+               }
+            } catch (SQLException var13) {
+               if (pstmt != null) {
+                  try {
+                     pstmt.close();
+                  } catch (SQLException var10) {
+                     var13.addSuppressed(var10);
+                  }
+               }
+
+               throw var13;
+            }
+
+            if (pstmt != null) {
+               pstmt.close();
+            }
+         } catch (SQLException var14) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var9) {
+                  var14.addSuppressed(var9);
+               }
+            }
+
+            throw var14;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+      } catch (SQLException var15) {
+         var15.printStackTrace();
+      }
+
+      return job;
+   }
+
+   public boolean insertJob(Job job) {
+      String sql = "INSERT INTO Jobs (Title, Location, Description, SalaryMin, SalaryMax, JobType, Status, CategoryId, IsNegotiable, ExpiredAt, CompanyId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         boolean var5;
+         try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            try {
+               pstmt.setString(1, job.getTitle());
+               pstmt.setString(2, job.getLocation());
+               pstmt.setString(3, job.getDescription());
+               pstmt.setInt(4, job.getSalaryMin());
+               pstmt.setInt(5, job.getSalaryMax());
+               pstmt.setInt(6, job.getJobType());
+               pstmt.setInt(7, job.getStatus());
+               pstmt.setInt(8, job.getCategoryId());
+               pstmt.setBoolean(9, job.getIsNegotiable());
+               pstmt.setTimestamp(10, job.getExpiredAt()!= null ? Timestamp.valueOf(job.getExpiredAt()) : null);
+               pstmt.setInt(11, job.getCompanyId());
+               var5 = pstmt.executeUpdate() > 0;
+            } catch (SQLException var9) {
+               if (pstmt != null) {
+                  try {
+                     pstmt.close();
+                  } catch (Throwable var8) {
+                     var9.addSuppressed(var8);
+                  }
+               }
+
+               throw var9;
+            }
+
+            if (pstmt != null) {
+               pstmt.close();
+            }
+         } catch (SQLException var10) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var7) {
+                  var10.addSuppressed(var7);
+               }
+            }
+
+            throw var10;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+
+         return var5;
+      } catch (SQLException var11) {
+         var11.printStackTrace();
+         return false;
+      }
+   }
+
+   public boolean updateJob(Job job) {
+      String sql = "UPDATE Jobs SET Title = ?, Location = ?, SalaryMin = ?, SalaryMax = ?, JobType = ?, Status = ?, CategoryId = ?, Description = ?, IsNegotiable = ?, ExpiredAt=? WHERE Id = ?";
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         boolean var5;
+         try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            try {
+               pstmt.setString(1, job.getTitle());
+               pstmt.setString(2, job.getLocation());
+               pstmt.setInt(3, job.getSalaryMin());
+               pstmt.setInt(4, job.getSalaryMax());
+               pstmt.setInt(5, job.getJobType());
+               pstmt.setInt(6, job.getStatus());
+               pstmt.setInt(7, job.getCategoryId());
+               pstmt.setString(8, job.getDescription());
+               pstmt.setBoolean(9, job.getIsNegotiable());
+               pstmt.setDate(10, job.getExpiredAt()!= null ? Date.valueOf(job.getExpiredAt().toLocalDate()) : null);
+               pstmt.setInt(11, job.getId());
+               var5 = pstmt.executeUpdate() > 0;
+            } catch (SQLException var9) {
+               if (pstmt != null) {
+                  try {
+                     pstmt.close();
+                  } catch (SQLException var8) {
+                     var9.addSuppressed(var8);
+                  }
+               }
+
+               throw var9;
+            }
+
+            if (pstmt != null) {
+               pstmt.close();
+            }
+         } catch (Throwable var10) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var7) {
+                  var10.addSuppressed(var7);
+               }
+            }
+
+            throw var10;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+
+         return var5;
+      } catch (SQLException var11) {
+         var11.printStackTrace();
+         return false;
+      }
+   }
+
+   public boolean deleteJob(int id) {
+      String sql = "DELETE FROM Jobs WHERE Id = ?";
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         boolean var5;
+         try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            try {
+               pstmt.setInt(1, id);
+               var5 = pstmt.executeUpdate() > 0;
+            } catch (SQLException var9) {
+               if (pstmt != null) {
+                  try {
+                     pstmt.close();
+                  } catch (SQLException var8) {
+                     var9.addSuppressed(var8);
+                  }
+               }
+
+               throw var9;
+            }
+
+            if (pstmt != null) {
+               pstmt.close();
+            }
+         } catch (SQLException var10) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var7) {
+                  var10.addSuppressed(var7);
+               }
+            }
+
+            throw var10;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+
+         return var5;
+      } catch (SQLException var11) {
+         var11.printStackTrace();
+         return false;
+      }
+   }
+
+   public List<Job> searchJobsPaging(String title, String location, int page, int pageSize, int id) {
+      List<Job> list = new ArrayList();
+      String sql = "SELECT * FROM jobs WHERE CompanyId =? AND title LIKE ? AND location LIKE ? ORDER BY createdAt DESC LIMIT ? OFFSET ?";
+      String queryTitle = title == null ? "%%" : "%" + title + "%";
+      String queryLoc = location == null ? "%%" : "%" + location + "%";
+      int offset = (page - 1) * pageSize;
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            try {
+               ps.setInt(1, id);
+               ps.setString(2, queryTitle);
+               ps.setString(3, queryLoc);
+               ps.setInt(4, pageSize);
+               ps.setInt(5, offset);
+
+               Job job;
+               for(ResultSet rs = ps.executeQuery(); rs.next(); list.add(job)) {
+                  job = new Job();
+                  job.setId(rs.getInt("Id"));
+                  job.setTitle(rs.getString("Title"));
+                  job.setLocation(rs.getString("Location"));
+                  job.setSalaryMin(rs.getInt("SalaryMin"));
+                  job.setSalaryMax(rs.getInt("SalaryMax"));
+                  job.setJobType(rs.getInt("JobType"));
+                  job.setStatus(rs.getInt("Status"));
+                  job.setCategoryId(rs.getInt("CategoryId"));
+                  job.setDescription(rs.getString("Description"));
+                  job.setIsNegotiable(rs.getBoolean("IsNegotiable"));
+                  job.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                   Timestamp sqlDate= rs.getTimestamp("ExpiredAt");
+                  if (sqlDate != null) {
+                     job.setExpiredAt(sqlDate.toLocalDateTime());
+                  } else {
+                     job.setExpiredAt(null);
+                  }
+               }
+            } catch (SQLException var17) {
+               if (ps != null) {
+                  try {
+                     ps.close();
+                  } catch (SQLException var16) {
+                     var17.addSuppressed(var16);
+                  }
+               }
+
+               throw var17;
+            }
+
+            if (ps != null) {
+               ps.close();
+            }
+         } catch (SQLException var18) {
+            if (conn != null) {
+               try {
+                  conn.close();
+               } catch (SQLException var15) {
+                  var18.addSuppressed(var15);
+               }
+            }
+
+            throw var18;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+      } catch (Exception var19) {
+         var19.printStackTrace();
+      }
+
+      return list;
+   }
+
+   public int getTotalJobs(String title, String location, int id) {
+      String sql = "SELECT COUNT(*) FROM jobs WHERE CompanyId = ? AND title LIKE ? AND location LIKE ?";
+      String queryTitle = title == null ? "%%" : "%" + title + "%";
+      String queryLoc = location == null ? "%%" : "%" + location + "%";
+
+      try {
+         Connection conn = DBConnection.getConnection();
+
+         int var9;
+         label98: {
+            try {
+               PreparedStatement ps = conn.prepareStatement(sql);
+
+               label88: {
+                  try {
+                     ps.setInt(1, id);
+                     ps.setString(2, queryTitle);
+                     ps.setString(3, queryLoc);
+                     ResultSet rs = ps.executeQuery();
+                     if (!rs.next()) {
+                        break label88;
+                     }
+
+                     var9 = rs.getInt(1);
+                  } catch (SQLException var12) {
+                     if (ps != null) {
+                        try {
+                           ps.close();
+                        } catch (SQLException var11) {
+                           var12.addSuppressed(var11);
+                        }
+                     }
+
+                     throw var12;
+                  }
+
+                  if (ps != null) {
+                     ps.close();
+                  }
+                  break label98;
+               }
+
+               if (ps != null) {
+                  ps.close();
+               }
+            } catch (Throwable var13) {
+               if (conn != null) {
+                  try {
+                     conn.close();
+                  } catch (SQLException var10) {
+                     var13.addSuppressed(var10);
+                  }
+               }
+
+               throw var13;
+            }
+
+            if (conn != null) {
+               conn.close();
+            }
+
+            return 0;
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+
+         return var9;
+      } catch (Exception var14) {
+         var14.printStackTrace();
+         return 0;
+      }
+   }
+    public List<Job> getAll() {
+        List<Job> list = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = "SELECT * FROM Jobs";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()) {
+                Job j = new Job();
+                j.setId(rs.getInt("Id"));
+                j.setCompanyId(rs.getInt("CompanyId"));
+                j.setTitle(rs.getString("Title"));
+                j.setDescription(rs.getString("Description"));
+                j.setLocation(rs.getString("Location"));
+                list.add(j);
+            }
+        } catch (Exception e) {}
+        return list;
     }
 }
