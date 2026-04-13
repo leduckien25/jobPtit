@@ -38,7 +38,7 @@
                 <!-- Navbar: Trang chủ + Việc làm -->
                 <nav class="hidden md:flex items-center space-x-8">
                     <a class="font-medium text-gray-600 hover:text-ptit-red" href="${pageContext.request.contextPath}/home">Trang chủ</a>
-                    <a class="font-medium text-gray-600 hover:text-ptit-red" href="#">Việc làm</a>
+                    <a class="font-medium text-gray-600 hover:text-ptit-red" href="${pageContext.request.contextPath}/jobs">Việc làm</a>
                 </nav>
             </div>
         </div>
@@ -78,13 +78,6 @@
                     </div>
                 </div>
 
-                <!-- Nút theo dõi công ty -->
-                <div class="flex flex-col gap-3 w-full md:w-auto">
-                    <button class="bg-ptit-red hover:opacity-90 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                        Theo dõi công ty
-                    </button>
-                </div>
             </div>
 
             <!-- Grid: giới thiệu công ty + thông tin liên hệ -->
