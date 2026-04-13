@@ -1,10 +1,10 @@
-  package Controller;
+  package controller;
 
 import dao.CategoryDAO;
 import dao.JobDAO;
 import model.Category;
 import model.Job;
-import Util.ValidateForm;
+import util.ValidateForm;
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -89,12 +89,17 @@ public class JobController extends HttpServlet {
                 User user = (User) request.getSession().getAttribute("LOGIN_USER");
                 Company company = companyDAO.findByOwnedId(user.getId());
                 job.setCompanyId(company.getId());
+                job.setCreatedByUserId(user.getId());
+                
                boolean checkInsert = jobDao.insertJob(job);
                if (checkInsert) {
                   session.setAttribute("message", "Đăng tin tuyển dụng thành công!");
                   session.setAttribute("msgType", "success");
                   response.sendRedirect(request.getContextPath() + "/job-manage");
                   return;
+               }
+               else{
+                   System.out.println(checkInsert);
                }
 
                request.setAttribute("message", "Lỗi: Không thể lưu vào cơ sở dữ liệu.");

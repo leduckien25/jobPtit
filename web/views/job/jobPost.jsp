@@ -139,13 +139,7 @@
                                         </select>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">Trạng thái *</label>
-                                        <select name="status" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-ptit-red transition appearance-none cursor-pointer">
-                                            <option value="0" ${(oldJob.status == 0 || param.status == '0') ? 'selected' : ''}>Inactive</option>
-                                            <option value="1" ${(oldJob.status == 1 || param.status == '1') ? 'selected' : ''}>Active</option>
-                                        </select>
-                                    </div>
+               
                                     <div class="md:col-span-1">
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Hạn nộp hồ sơ *</label>
                                     <div class="relative">

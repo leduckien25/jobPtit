@@ -1,5 +1,5 @@
 
-package Controller.admin;
+package controller.admin;
 
 import dao.JobDAO;
 import jakarta.servlet.ServletException;

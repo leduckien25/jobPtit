@@ -196,13 +196,13 @@
                                                         
                                                         <div class="flex items-center gap-4 flex-shrink-0">
                                                             <div class="text-center">
-                                                                <div class="font-bold text-gray-900">342</div>
+                                                                <div class="font-bold text-gray-900">${j.viewsCount}</div>
                                                                 <div class="text-xs text-gray-400">Lượt xem</div>
                                                             </div>
-                                                            <div class="text-center text-ptit-red">
+<!--                                                            <div class="text-center text-ptit-red">
                                                                 <div class="font-bold">18</div>
                                                                 <div class="text-xs text-gray-400">Ứng viên</div>
-                                                            </div>
+                                                            </div>-->
                                                             <div class="flex items-center gap-2 ml-2"> 
                                                                 <a href="${pageContext.request.contextPath}/job-edit/${j.id}">
                                                                     <button type="button" class="px-4 py-2 bg-ptit-red text-white text-sm font-bold rounded-xl hover:bg-red-700 transition">

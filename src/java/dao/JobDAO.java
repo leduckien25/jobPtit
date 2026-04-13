@@ -4,7 +4,7 @@
  */
 package dao;
 
-import Filter.JobFilter;
+import filter.JobFilter;
 import config.DBConnection;
 
 import model.Job;
@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class JobDAO {
@@ -692,7 +694,7 @@ public class JobDAO {
    }
 
    public boolean insertJob(Job job) {
-      String sql = "INSERT INTO Jobs (Title, Location, Description, SalaryMin, SalaryMax, JobType, Status, CategoryId, IsNegotiable, ExpiredAt, CompanyId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO Jobs (Title, Location, Description, SalaryMin, SalaryMax, JobType, Status, CategoryId, IsNegotiable, ExpiredAt, CompanyId, CreatedByUserId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       try {
          Connection conn = DBConnection.getConnection();
@@ -713,6 +715,7 @@ public class JobDAO {
                pstmt.setBoolean(9, job.getIsNegotiable());
                pstmt.setTimestamp(10, job.getExpiredAt()!= null ? Timestamp.valueOf(job.getExpiredAt()) : null);
                pstmt.setInt(11, job.getCompanyId());
+               pstmt.setInt(12, job.getCreatedByUserId());
                var5 = pstmt.executeUpdate() > 0;
             } catch (SQLException var9) {
                if (pstmt != null) {
@@ -898,6 +901,8 @@ public class JobDAO {
                   job.setDescription(rs.getString("Description"));
                   job.setIsNegotiable(rs.getBoolean("IsNegotiable"));
                   job.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                  job.setViewsCount(rs.getInt("ViewsCount"));
+                  
                    Timestamp sqlDate= rs.getTimestamp("ExpiredAt");
                   if (sqlDate != null) {
                      job.setExpiredAt(sqlDate.toLocalDateTime());

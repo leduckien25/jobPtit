@@ -1,5 +1,5 @@
 
-package Controller;
+package controller;
 
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
@@ -27,7 +27,7 @@ public class CompanyServlet extends HttpServlet {
 
             int id = userIdObj.getId();
             CompanyDAO dao = new CompanyDAO();
-            Company c = dao.getById(id);
+            Company c = dao.getByUserId(id);
             System.out.println(c);
             if (c == null) {
                 res.sendError(404);

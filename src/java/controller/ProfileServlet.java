@@ -1,5 +1,5 @@
 
-package Controller;
+package controller;
 
 import dao.ProfileDAO;
 import jakarta.servlet.ServletException;

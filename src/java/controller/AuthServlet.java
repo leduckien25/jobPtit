@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
+package controller;
 
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
@@ -135,7 +135,7 @@ public class AuthServlet extends HttpServlet {
             String redirectContext = req.getContextPath();
             String defaultRedirect = switch (user.getRole()) {
                 case 3 -> redirectContext + "/admin/dashboard";     // Admin
-                case 2 -> redirectContext + "/recruiter/dashboard"; // Nhà tuyển dụng
+                case 2 -> redirectContext + "/job-manage"; // Nhà tuyển dụng
                 case 1 -> redirectContext + "/";                // Ứng viên
                 default -> redirectContext + "/auth/login";
             };

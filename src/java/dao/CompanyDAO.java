@@ -179,9 +179,9 @@ public class CompanyDAO {
         }
         return 0;
     }
-     public Company getById(int id) {
+     public Company getByUserId(int id) {
         try {
-            String sql = "SELECT * FROM Companies WHERE Id=?";
+            String sql = "SELECT * FROM Companies WHERE OwnerUserId=?";
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);

@@ -1,10 +1,10 @@
- package Controller;
+ package controller;
 
 import dao.CategoryDAO;
 import dao.JobDAO;
 import model.Category;
 import model.Job;
-import Util.ValidateForm;
+import util.ValidateForm;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
