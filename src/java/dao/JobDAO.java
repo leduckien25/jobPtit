@@ -21,6 +21,65 @@ import java.util.Set;
 
 
 public class JobDAO {
+    public List<Job> findByCompanyId(int companyId) {
+        List<Job> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM Jobs WHERE CompanyId = ? ORDER BY CreatedAt DESC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, companyId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Job job = new Job();
+
+                job.setId(rs.getInt("Id"));
+                job.setTitle(rs.getString("Title"));
+                job.setDescription(rs.getString("Description"));
+                job.setLocation(rs.getString("Location"));
+
+                // salary
+                job.setSalaryMin((Integer) rs.getObject("SalaryMin"));
+                job.setSalaryMax((Integer) rs.getObject("SalaryMax"));
+
+                job.setJobType(rs.getInt("JobType"));
+                job.setStatus(rs.getInt("Status"));
+
+                job.setCategoryId(rs.getInt("CategoryId"));
+                job.setCompanyId(rs.getInt("CompanyId"));
+                job.setCreatedByUserId(rs.getInt("CreatedByUserId"));
+
+                job.setViewsCount(rs.getInt("ViewsCount"));
+
+                // createdAt
+                Timestamp createdTs = rs.getTimestamp("CreatedAt");
+                if (createdTs != null) {
+                    job.setCreatedAt(createdTs.toLocalDateTime());
+                }
+
+                // expiredAt
+                try {
+                    Timestamp expiredTs = rs.getTimestamp("ExpiredAt");
+                    if (expiredTs != null) {
+                        job.setExpiredAt(expiredTs.toLocalDateTime());
+                    }
+                } catch (Exception e) {
+                    // bỏ qua nếu chưa có cột
+                }
+
+                list.add(job);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
     private Job mapRow(ResultSet rs) throws SQLException {
         Job j = new Job();
         j.setId(rs.getInt("Id"));

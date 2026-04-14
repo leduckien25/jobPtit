@@ -12,8 +12,6 @@ public class Application {
     // Hai trường này cực kỳ quan trọng để hiển thị Tên Công Việc và Công Ty lên Figma
     private String jobTitle;
     private String companyName;
-    private String candidateName;
-    private String cvUrl;
 
     public Application() {}
 
@@ -33,12 +31,6 @@ public class Application {
     public Timestamp getAppliedAt() { return appliedAt; }
     public void setAppliedAt(Timestamp appliedAt) { this.appliedAt = appliedAt; }
 
-    public String getCandidateName() { return candidateName; }
-    public void setCandidateName(String candidateName) { this.candidateName = candidateName; }
-
-    public String getCvUrl() { return cvUrl; }
-    public void setCvUrl(String cvUrl) { this.cvUrl = cvUrl; }
-    
     public String getJobTitle() { return jobTitle; }
     public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle; }
 

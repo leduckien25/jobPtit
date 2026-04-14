@@ -1,16 +1,12 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import dao.ApplicationDAO;
-import model.Application;
-import model.User; 
 
 @WebServlet("/apply")
 public class ApplyServlet extends HttpServlet {
@@ -19,51 +15,23 @@ public class ApplyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        
-        //  Kiểm tra đăng nhập 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("LOGIN_USER"); // Phải lấy đúng tên "LOGIN_USER"
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/auth/login");
-            return;
-        }
-
-        String action = request.getParameter("action");
-        if (action == null) action = "viewForm";
-
-        switch (action) {
-            case "delete": // Xử lý hủy đơn
-                int appId = Integer.parseInt(request.getParameter("appId"));
-                appDAO.deleteApplication(appId);
-                response.sendRedirect("apply?action=list"); // Xóa xong quay lại danh sách
-                break;
-
-            case "list": // Hiển thị danh sách đã nộp
-                List<Application> appliedList = appDAO.getAppliedJobs(user.getId());
-                request.setAttribute("appliedList", appliedList);
-                request.getRequestDispatcher("appliedJobs.jsp").forward(request, response);
-                break;
-
-            default: // Mặc định hiển thị trang xác nhận nộp đơn 
-                request.getRequestDispatcher("applyForm.jsp").forward(request, response);
-                break;
-        }
+        // Hiển thị trang xác nhận nộp đơn
+        request.getRequestDispatcher("applyForm.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         try {
-            // 1. Lấy User từ Session (Sửa lỗi sai tên biến)
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("LOGIN_USER");
-            
-            if (user == null) {
-                response.sendRedirect(request.getContextPath() + "/auth/login");
+            // 1. Kiểm tra đăng nhập để lấy userId
+            Object userObj = request.getSession().getAttribute("userId");
+            if (userObj == null) {
+                response.sendRedirect("login.jsp");
                 return;
             }
+            int userId = (int) userObj;
 
-            // 2. Lấy jobId
+            // 2. Lấy jobId từ thẻ input hidden trong applyForm.jsp
             String jobIdStr = request.getParameter("jobId");
             if (jobIdStr == null || jobIdStr.isEmpty()) {
                 response.sendRedirect("index.jsp");
@@ -71,19 +39,22 @@ public class ApplyServlet extends HttpServlet {
             }
             int jobId = Integer.parseInt(jobIdStr);
 
-            // 3. Gọi DAO nộp đơn (Mục 9)
-            boolean success = appDAO.addApplication(user.getId(), jobId);
+            // 3. Gọi DAO để thực hiện nộp đơn (Sử dụng hàm nhận 2 tham số: userId và jobId)
+            // Hệ thống sẽ mặc định dùng thông tin hồ sơ đã có trong Profile của người dùng
+            boolean success = appDAO.addApplication(userId, jobId);
 
             if (success) {
-                //  Thành công thì nhảy về trang danh sách thông qua Servlet để load dữ liệu
-                response.sendRedirect("apply?action=list");
+                // Thành công: Chuyển về trang danh sách việc làm đã nộp
+                response.sendRedirect("appliedJobs.jsp");
             } else {
-                request.setAttribute("msg", "Bạn đã ứng tuyển công việc này rồi hoặc hồ sơ chưa sẵn sàng.");
+                // Thất bại (Ví dụ: Đã nộp rồi): Thông báo lại tại trang form
+                request.setAttribute("msg", "Bạn đã ứng tuyển công việc này trước đó hoặc hệ thống bận.");
                 request.getRequestDispatcher("applyForm.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("index.jsp");
+            request.setAttribute("msg", "Lỗi hệ thống: " + e.getMessage());
+            request.getRequestDispatcher("applyForm.jsp").forward(request, response);
         }
     }
 }

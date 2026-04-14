@@ -7,56 +7,51 @@ import java.util.List;
 import model.Application;
 
 public class ApplicationDAO {
+    private Connection conn;
 
-    public ApplicationDAO() {}
+    // Constructor khởi tạo kết nối MySQL
+    public ApplicationDAO() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JobPtit", "root", "Kobiethichiuhoi2@");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
-     Nộp đơn ứng tuyển
+     * Hàm nộp đơn ứng tuyển: Chỉ lưu UserId và JobId.
+     * CV sẽ được hệ thống tự động lấy từ bảng CandidateProfiles khi cần.
      */
     public boolean addApplication(int userId, int jobId) {
-        // Kiểm tra xem đã ứng tuyển chưa (tránh nộp trùng)
-        if (hasApplied(userId, jobId)) return false;
-
-        String sql = "INSERT INTO Applications (UserId, JobId, Status, AppliedAt) VALUES (?, ?, 0, GETDATE())";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            if (conn == null) return false;
+        // Thêm cột AppliedAt với giá trị NOW() để ghi nhận thời gian nộp đơn
+        String sql = "INSERT INTO Applications (UserId, JobId, Status, AppliedAt) VALUES (?, ?, 0, NOW())";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             ps.setInt(2, jobId);
+            
             return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) { 
+            // Nếu người dùng nộp đơn trùng (Unique constraint), lỗi sẽ hiện ở đây
+            e.printStackTrace(); 
         }
         return false;
     }
 
-    // Hàm phụ kiểm tra trùng lặp
-    private boolean hasApplied(int userId, int jobId) {
-        String sql = "SELECT Id FROM Applications WHERE UserId = ? AND JobId = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ps.setInt(2, jobId);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-        } catch (Exception e) { return false; }
-    }
-
     /**
-    Lấy danh sách việc làm đã nộp (cho Candidate)
+     * Hàm lấy danh sách công việc đã nộp để hiển thị cho ứng viên
      */
     public List<Application> getAppliedJobs(int userId) {
         List<Application> list = new ArrayList<>();
+        // Query join bảng để lấy tiêu đề công việc và tên công ty
         String sql = "SELECT a.*, j.Title as jobTitle, c.Name as companyName " +
                      "FROM Applications a " +
                      "JOIN Jobs j ON a.JobId = j.Id " +
                      "JOIN Companies c ON j.CompanyId = c.Id " +
                      "WHERE a.UserId = ? " +
-                     "ORDER BY a.AppliedAt DESC"; 
+                     "ORDER BY a.AppliedAt DESC"; // Sắp xếp đơn mới nhất lên đầu
                      
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            if (conn == null) return list;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -74,49 +69,5 @@ public class ApplicationDAO {
         }
         return list;
     }
-
-    /**
-     Xóa đơn ứng tuyển (Hủy đơn)
-     */
-    public boolean deleteApplication(int appId) {
-        // Chỉ cho phép xóa khi trạng thái là 0 (Đang chờ)
-        String sql = "DELETE FROM Applications WHERE Id = ? AND Status = 0";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            if (conn == null) return false;
-            ps.setInt(1, appId);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     Xem ứng viên đã ứng tuyển (Hỗ trợ Recruiter)
-     * Hàm này giúp lấy thông tin Ứng viên + CV từ bảng CandidateProfiles
-     */
-    public List<Application> getApplicationsByJobId(int jobId) {
-        List<Application> list = new ArrayList<>();
-        String sql = "SELECT a.*, cp.FullName, cp.CVUrl, u.Email " +
-                     "FROM Applications a " +
-                     "JOIN Users u ON a.UserId = u.Id " +
-                     "LEFT JOIN CandidateProfiles cp ON u.Id = cp.UserId " +
-                     "WHERE a.JobId = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, jobId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Application app = new Application();
-                app.setId(rs.getInt("Id"));
-                app.setCandidateName(rs.getString("FullName") != null ? rs.getString("FullName") : rs.getString("Email"));
-                app.setCvUrl(rs.getString("CVUrl"));
-                app.setStatus(rs.getInt("Status"));
-                app.setAppliedAt(rs.getTimestamp("AppliedAt"));
-                list.add(app);
-            }
-        } catch (Exception e) { e.printStackTrace(); }
-        return list;
-    }
+    
 }
