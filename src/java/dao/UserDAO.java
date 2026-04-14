@@ -4,7 +4,7 @@
  */
 package dao;
 
-import Util.SecurityUtil;
+import util.SecurityUtil;
 import config.DBConnection;
 import model.User;
 import java.sql.*;

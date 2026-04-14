@@ -5,7 +5,7 @@
 package controller.candidate;
 
 
-import Filter.JobFilter;
+import filter.JobFilter;
 import dao.CategoryDAO;
 import dao.JobDAO;
 

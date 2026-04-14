@@ -4,7 +4,7 @@
  */
 package dao;
 
-import Filter.JobFilter;
+import filter.JobFilter;
 import config.DBConnection;
 
 import model.Job;
@@ -16,9 +16,70 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class JobDAO {
+    public List<Job> findByCompanyId(int companyId) {
+        List<Job> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM Jobs WHERE CompanyId = ? ORDER BY CreatedAt DESC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, companyId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Job job = new Job();
+
+                job.setId(rs.getInt("Id"));
+                job.setTitle(rs.getString("Title"));
+                job.setDescription(rs.getString("Description"));
+                job.setLocation(rs.getString("Location"));
+
+                // salary
+                job.setSalaryMin((Integer) rs.getObject("SalaryMin"));
+                job.setSalaryMax((Integer) rs.getObject("SalaryMax"));
+
+                job.setJobType(rs.getInt("JobType"));
+                job.setStatus(rs.getInt("Status"));
+
+                job.setCategoryId(rs.getInt("CategoryId"));
+                job.setCompanyId(rs.getInt("CompanyId"));
+                job.setCreatedByUserId(rs.getInt("CreatedByUserId"));
+
+                job.setViewsCount(rs.getInt("ViewsCount"));
+
+                // createdAt
+                Timestamp createdTs = rs.getTimestamp("CreatedAt");
+                if (createdTs != null) {
+                    job.setCreatedAt(createdTs.toLocalDateTime());
+                }
+
+                // expiredAt
+                try {
+                    Timestamp expiredTs = rs.getTimestamp("ExpiredAt");
+                    if (expiredTs != null) {
+                        job.setExpiredAt(expiredTs.toLocalDateTime());
+                    }
+                } catch (Exception e) {
+                    // bỏ qua nếu chưa có cột
+                }
+
+                list.add(job);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
     private Job mapRow(ResultSet rs) throws SQLException {
         Job j = new Job();
         j.setId(rs.getInt("Id"));
@@ -602,7 +663,27 @@ public class JobDAO {
 
       return list;
    }
+    public int getTotalViewsByCompany(int companyId) {
+     String sql = "SELECT SUM(ViewsCount) AS TotalViews FROM Jobs WHERE CompanyId = ?";
+     int totalViews = 0;
 
+     // Sử dụng try-with-resources để tự động đóng Connection, PreparedStatement và ResultSet
+     try (Connection conn = DBConnection.getConnection();
+          PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+         pstmt.setInt(1, companyId);
+
+         try (ResultSet rs = pstmt.executeQuery()) {
+             if (rs.next()) {
+                 totalViews = rs.getInt("TotalViews");
+             }
+         }
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+
+     return totalViews;
+ }
    public Job getJobById(int id) {
       String sql = "SELECT * FROM Jobs WHERE Id = ?";
       Job job = null;
@@ -692,7 +773,7 @@ public class JobDAO {
    }
 
    public boolean insertJob(Job job) {
-      String sql = "INSERT INTO Jobs (Title, Location, Description, SalaryMin, SalaryMax, JobType, Status, CategoryId, IsNegotiable, ExpiredAt, CompanyId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO Jobs (Title, Location, Description, SalaryMin, SalaryMax, JobType, Status, CategoryId, IsNegotiable, ExpiredAt, CompanyId, CreatedByUserId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       try {
          Connection conn = DBConnection.getConnection();
@@ -708,11 +789,12 @@ public class JobDAO {
                pstmt.setInt(4, job.getSalaryMin());
                pstmt.setInt(5, job.getSalaryMax());
                pstmt.setInt(6, job.getJobType());
-               pstmt.setInt(7, job.getStatus());
+               pstmt.setInt(7, 0);
                pstmt.setInt(8, job.getCategoryId());
                pstmt.setBoolean(9, job.getIsNegotiable());
                pstmt.setTimestamp(10, job.getExpiredAt()!= null ? Timestamp.valueOf(job.getExpiredAt()) : null);
                pstmt.setInt(11, job.getCompanyId());
+               pstmt.setInt(12, job.getCreatedByUserId());
                var5 = pstmt.executeUpdate() > 0;
             } catch (SQLException var9) {
                if (pstmt != null) {
@@ -898,6 +980,8 @@ public class JobDAO {
                   job.setDescription(rs.getString("Description"));
                   job.setIsNegotiable(rs.getBoolean("IsNegotiable"));
                   job.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                  job.setViewsCount(rs.getInt("ViewsCount"));
+                  
                    Timestamp sqlDate= rs.getTimestamp("ExpiredAt");
                   if (sqlDate != null) {
                      job.setExpiredAt(sqlDate.toLocalDateTime());

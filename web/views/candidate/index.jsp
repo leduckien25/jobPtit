@@ -64,7 +64,7 @@
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/categories">Ngành nghề</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</button>
+                    <a href="${pageContext.request.contextPath}/profile" class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</a>
                     <a href="${pageContext.request.contextPath}/auth/logout" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
                 </div>
             </div>

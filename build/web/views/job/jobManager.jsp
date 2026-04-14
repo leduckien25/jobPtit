@@ -43,17 +43,24 @@
                                     <span class="text-gray-600 text-xs font-medium tracking-wider">PTIT.EDU.VN</span>
                                 </div>
                             </a>
-                            <div class="hidden md:flex items-center gap-3 pl-4">
+<!--                            <div class="hidden md:flex items-center gap-3 pl-4">
                                 <a class="px-5 py-2 border border-gray-300 text-gray-700 text-sm font-bold rounded hover:bg-gray-50 transition" href="#">Quản lý tin</a>
                                 <a class="px-5 py-2 bg-ptit-red text-white text-sm font-bold rounded hover:bg-red-700 transition" href="${pageContext.request.contextPath}/job">Đăng tin ngay</a>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="hidden md:flex items-center gap-4">
                             <div class="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 <span class="text-gray-700 font-medium">Nhà tuyển dụng</span>
                             </div>
-                            <button class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">Đăng xuất</button>
+                            <a href="${pageContext.request.contextPath}/auth/logout" class="block w-fit">
+                                <button class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Đăng xuất
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +73,7 @@
                             <div class="lg:col-span-1 space-y-6">
                                 <div class="space-y-2">
                                     <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition bg-ptit-red text-white shadow-lg shadow-red-100" href="#">Tin tuyển dụng</a>
-                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="${pageContext.request.contextPath}/company">Hồ sơ công ty</a>
+                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="${pageContext.request.contextPath}/recruiter/my-company">Hồ sơ công ty</a>
                                 </div>
                             </div>
 
@@ -93,13 +100,13 @@
                                         <div class="text-sm text-gray-500">Đang hiển thị</div>
                                     </div>
                                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                                        <div class="text-3xl font-bold text-blue-600">787</div>
+                                        <div class="text-3xl font-bold text-blue-600">${totalViewsCount}</div>
                                         <div class="text-sm text-gray-500">Lượt xem</div>
                                     </div>
-                                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+<!--                                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                                         <div class="text-3xl font-bold text-ptit-red">38</div>
                                         <div class="text-sm text-gray-500">Đơn ứng tuyển</div>
-                                    </div>
+                                    </div>-->
                                 </div>
 
                                 <c:if test="${not empty sessionScope.message}">
@@ -151,7 +158,7 @@
                                                                 <h3 class="text-lg font-bold text-gray-900 truncate" title="${j.title}">
                                                                     ${j.title}
                                                                 </h3>
-                                                                <div class="flex-shrink-0">
+<!--                                                                <div class="flex-shrink-0">
                                                                     <c:choose>
                                                                         <c:when test="${j.status == 1}">
                                                                             <span class="whitespace-nowrap px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded-full border border-green-200">
@@ -164,7 +171,7 @@
                                                                             </span>
                                                                         </c:otherwise>
                                                                     </c:choose>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
 
                                                             <div class="flex gap-4 text-sm text-gray-500 mt-2">
@@ -187,28 +194,47 @@
                                                                     <span class="font-medium text-gray-500">Ngày đăng:</span> 
                                                                     <span>${j.createdAtFormatted}</span>
                                                                 </span>
-                                                               <span class="flex items-center gap-1">
+                                                                <span class="flex items-center gap-1">
                                                                     <span class="font-medium text-gray-500">Hạn nộp:</span> 
                                                                     <span>${j.deadlineFormatted}</span> 
                                                                 </span>
                                                             </div>
+
+<!--                                                            <div class="mt-2">
+                                                                <a href="${pageContext.request.contextPath}/job-apply/${j.id}" 
+                                                                   class="inline-flex items-center gap-1.5 text-xs font-bold text-ptit-red hover:text-red-700 transition-colors">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                                                    </svg>
+                                                                    Danh sách ứng tuyển hồ sơ →
+                                                                </a>
+                                                            </div>-->
                                                         </div>
                                                         
                                                         <div class="flex items-center gap-4 flex-shrink-0">
                                                             <div class="text-center">
-                                                                <div class="font-bold text-gray-900">342</div>
+                                                                <div class="font-bold text-gray-900">${j.viewsCount}</div>
                                                                 <div class="text-xs text-gray-400">Lượt xem</div>
                                                             </div>
-                                                            <div class="text-center text-ptit-red">
+<!--                                                            <div class="text-center text-ptit-red">
                                                                 <div class="font-bold">18</div>
                                                                 <div class="text-xs text-gray-400">Ứng viên</div>
-                                                            </div>
+                                                            </div>-->
                                                             <div class="flex items-center gap-2 ml-2"> 
                                                                 <a href="${pageContext.request.contextPath}/job-edit/${j.id}">
                                                                     <button type="button" class="px-4 py-2 bg-ptit-red text-white text-sm font-bold rounded-xl hover:bg-red-700 transition">
                                                                         Chỉnh sửa
                                                                     </button>
-                                                                </a> 
+                                                                </a>
+                                                                <form action="${pageContext.request.contextPath}/job-manage" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa công việc này?');" style="display:inline;">
+                                                                    <input type="hidden" name="action" value="delete">
+
+                                                                    <input type="hidden" name="id" value="${j.id}">
+
+                                                                    <button type="submit" class="px-4 py-2 bg-gray-100 text-gray-600 text-sm font-bold rounded-xl hover:bg-red-50 hover:text-red-600 transition border border-gray-200 hover:border-red-200">
+                                                                        Xóa
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>

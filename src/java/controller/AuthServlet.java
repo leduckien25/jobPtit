@@ -21,30 +21,29 @@ public class AuthServlet extends HttpServlet {
 
     private final UserDAO userDAO = new UserDAO();
 
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-            switch (action(req)) {
-                case "login"    ->{
-                    // --- THÊM ĐOẠN NÀY ĐỂ ĐỌC COOKIE ---
-                    Cookie[] cookies = req.getCookies();
-                    if (cookies != null) {
-                        for (Cookie c : cookies) {
-                            if (c.getName().equals("savedEmail")) req.setAttribute("savedEmail", c.getValue());
-                            if (c.getName().equals("savedPass")) req.setAttribute("savedPass", c.getValue());
-                            if (c.getName().equals("savedRemember")) req.setAttribute("savedRemember", "checked");
-                        }
-                    } 
-                    forward(req, resp, "/views/auth/login.jsp");
-                }
-                case "register" -> forward(req, resp, "/views/auth/register.jsp");
-                case "logout"   -> logout(req, resp);
-                case "forgot-password" -> forward(req,resp,"/views/auth/forgot-password.jsp");
-                default         -> resp.sendRedirect(req.getContextPath() + "/auth/login");
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        switch (action(req)) {
+            case "login"    ->{
+                // --- THÊM ĐOẠN NÀY ĐỂ ĐỌC COOKIE ---
+                Cookie[] cookies = req.getCookies();
+                if (cookies != null) {
+                    for (Cookie c : cookies) {
+                        if (c.getName().equals("savedEmail")) req.setAttribute("savedEmail", c.getValue());
+                        if (c.getName().equals("savedPass")) req.setAttribute("savedPass", c.getValue());
+                        if (c.getName().equals("savedRemember")) req.setAttribute("savedRemember", "checked");
+                    }
+                } 
+                forward(req, resp, "/views/auth/login.jsp");
             }
+            case "register" -> forward(req, resp, "/views/auth/register.jsp");
+            case "logout"   -> logout(req, resp);
+            case "forgot-password" -> forward(req,resp,"/views/auth/forgot-password.jsp");
+            default         -> resp.sendRedirect(req.getContextPath() + "/auth/login");
         }
-    
-  
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -136,7 +135,7 @@ public class AuthServlet extends HttpServlet {
             String redirectContext = req.getContextPath();
             String defaultRedirect = switch (user.getRole()) {
                 case 3 -> redirectContext + "/admin/dashboard";     // Admin
-                case 2 -> redirectContext + "/recruiter/dashboard"; // Nhà tuyển dụng
+                case 2 -> redirectContext + "/job-manage"; // Nhà tuyển dụng
                 case 1 -> redirectContext + "/";                // Ứng viên
                 default -> redirectContext + "/auth/login";
             };

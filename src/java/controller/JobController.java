@@ -4,7 +4,7 @@ import dao.CategoryDAO;
 import dao.JobDAO;
 import model.Category;
 import model.Job;
-import Util.ValidateForm;
+import util.ValidateForm;
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,9 +29,18 @@ public class JobController extends HttpServlet {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
       response.setContentType("text/html; charset=UTF-8");
+      HttpSession session = request.getSession(false);
+      User user = (session != null) ? (User) session.getAttribute("LOGIN_USER") : null;
+      if (user == null) {
+          response.sendRedirect(request.getContextPath() + "/auth/login");
+      } else if (user.getRole() != 2) { 
+          request.setAttribute("error", "Bạn không có quyền truy cập chức năng này!");
+          request.getRequestDispatcher("/views/error/forbidden.jsp").forward(request, response);
+      } else {
+          System.out.println("User đang đăng nhập: " + user.getEmail());
+      }
       String url = "/views/job/jobPost.jsp";
       String action = request.getParameter("action");
-      HttpSession session = request.getSession();
       CategoryDAO categoryDAO = new CategoryDAO();
       List<Category> categories = categoryDAO.getAllCategories();
       request.setAttribute("categories", categories);
@@ -45,11 +54,11 @@ public class JobController extends HttpServlet {
             String salaryMinStr = request.getParameter("salary-min");
             String salaryMaxStr = request.getParameter("salary-max");
             String jobTypeStr = request.getParameter("job-type");
-            String statusStr = request.getParameter("status");
+//            String statusStr = request.getParameter("status");
             String categoryIdStr = request.getParameter("category");
             String negotiableStr = request.getParameter("negotiable");
             boolean negotiable = negotiableStr != null && negotiableStr.equals("on") ? true : false;
-            String deadlineStr = request.getParameter("deadline");
+            String deadlineStr = !request.getParameter("deadline").isEmpty()? request.getParameter("deadline") : null;
             Map<String, String> errors = ValidateForm.validateJobPost(title, location, salaryMinStr, salaryMaxStr, negotiableStr, deadlineStr);
             Job oldJob = new Job();
             oldJob.setTitle(title);
@@ -61,7 +70,6 @@ public class JobController extends HttpServlet {
                oldJob.setSalaryMin(salaryMinStr != null && !salaryMinStr.isEmpty() ? Integer.valueOf(salaryMinStr) : 0);
                oldJob.setSalaryMax(salaryMaxStr != null && !salaryMaxStr.isEmpty() ? Integer.valueOf(salaryMaxStr) : 0);
                oldJob.setJobType(Integer.parseInt(jobTypeStr));
-               oldJob.setStatus(Integer.parseInt(statusStr));
                oldJob.setCategoryId(Integer.parseInt(categoryIdStr));
                oldJob.setIsNegotiable(negotiable);
             } catch (Exception var30) {
@@ -80,21 +88,24 @@ public class JobController extends HttpServlet {
                }
 
                int jobType = Integer.parseInt(jobTypeStr);
-               int status = Integer.parseInt(statusStr);
                int categoryId = Integer.parseInt(categoryIdStr);
-               LocalDateTime deadline = LocalDate.parse(deadlineStr).atStartOfDay();
-               Job job = new Job(title, location, description, salaryMax, salaryMin, jobType, status, categoryId, negotiable, deadline);
+               LocalDateTime deadline = deadlineStr!= null && !deadlineStr.isEmpty() ?LocalDate.parse(deadlineStr).atStartOfDay() : null;
+               Job job = new Job(title, location, description, salaryMax, salaryMin, jobType, 0, categoryId, negotiable, deadline);
                JobDAO jobDao = new JobDAO();
                CompanyDAO companyDAO = new CompanyDAO();
-                User user = (User) request.getSession().getAttribute("LOGIN_USER");
                 Company company = companyDAO.findByOwnedId(user.getId());
                 job.setCompanyId(company.getId());
+                job.setCreatedByUserId(user.getId());
+                
                boolean checkInsert = jobDao.insertJob(job);
                if (checkInsert) {
                   session.setAttribute("message", "Đăng tin tuyển dụng thành công!");
                   session.setAttribute("msgType", "success");
                   response.sendRedirect(request.getContextPath() + "/job-manage");
                   return;
+               }
+               else{
+                   System.out.println(checkInsert);
                }
 
                request.setAttribute("message", "Lỗi: Không thể lưu vào cơ sở dữ liệu.");

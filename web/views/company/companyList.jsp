@@ -51,9 +51,11 @@
                         
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-2 py-0.5 rounded">
-                                      Verified
-                                </span>
+                                <c:if test="${c.isVerified == 1}">
+                                    <span class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                                        Verified
+                                    </span>
+                                </c:if>
                             </div>
                             <h3 class="font-black text-xl text-gray-900 line-clamp-1 group-hover:text-ptit-red transition-colors">
                                 ${c.name}
@@ -78,7 +80,16 @@
                 </div>
             </c:forEach>
         </div>
-
+        
+        <div class="flex justify-center mt-10 gap-2">
+            <c:forEach begin="1" end="${totalPages}" var="i">
+                <a href="${pageContext.request.contextPath}/companies?page=${i}"
+                   class="px-4 py-2 rounded-lg border 
+                   ${i == currentPage ? 'bg-ptit-red text-white' : 'bg-white text-gray-700'}">
+                    ${i}
+                </a>
+            </c:forEach>
+        </div>
         <c:if test="${empty companies}">
             <div class="text-center py-20">
                 <div class="text-6xl mb-4">🏢</div>

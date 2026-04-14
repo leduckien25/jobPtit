@@ -30,6 +30,7 @@ public class CompanyServlet extends HttpServlet {
 
             if (c == null) {
                 res.sendError(404);
+                System.out.println("Lỗi không thấy công ty");
                 return;
             }
 

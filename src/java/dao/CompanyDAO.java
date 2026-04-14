@@ -179,9 +179,9 @@ public class CompanyDAO {
         }
         return 0;
     }
-     public Company getById(int id) {
+     public Company getByUserId(int id) {
         try {
-            String sql = "SELECT * FROM Companies WHERE Id=?";
+            String sql = "SELECT * FROM Companies WHERE OwnerUserId=?";
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -206,5 +206,24 @@ public class CompanyDAO {
             e.printStackTrace();
         }
         return null;
+    }
+     
+    public void update(Company c) {
+        // THÊM LogoUrl=? vào đây
+        String sql = "UPDATE Companies SET Name=?, Location=?, Description=?, LogoUrl=? WHERE Id=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, c.getName());
+            ps.setString(2, c.getLocation());
+            ps.setString(3, c.getDescription());
+            ps.setString(4, c.getLogoUrl()); // Dòng cực kỳ quan trọng
+            ps.setInt(5, c.getId());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

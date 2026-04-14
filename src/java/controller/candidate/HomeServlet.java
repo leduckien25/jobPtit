@@ -24,7 +24,7 @@ import model.Job;
 import model.User;
 
 
-@WebServlet(name = "HomeServlet", urlPatterns = {"/", "/home"})
+@WebServlet(name = "HomeServlet", urlPatterns = {"", "/home"})
 public class HomeServlet extends HttpServlet {
 
     
