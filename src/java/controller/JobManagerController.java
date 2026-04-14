@@ -19,7 +19,18 @@ public class JobManagerController extends HttpServlet {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
       response.setContentType("text/html; charset=UTF-8");
+      
       JobDAO jobDAO = new JobDAO();
+      String action = request.getParameter("action");
+        String id = request.getParameter("id");
+
+        if ("delete".equals(action)) {
+            // Gọi hàm xóa job với id tương ứng
+            jobDAO.deleteJob(Integer.parseInt(id));
+            // Chuyển hướng về lại trang danh sách
+            response.sendRedirect("job-manage");
+            return;
+        }
       CompanyDAO companyDAO = new CompanyDAO();
       User user = (User) request.getSession().getAttribute("LOGIN_USER");
       Company company = companyDAO.findByOwnedId(user.getId());
@@ -31,6 +42,7 @@ public class JobManagerController extends HttpServlet {
       int pageSize = 5;
       List<Job> listJobs = jobDAO.searchJobsPaging(searchTitle, searchLocation, currentPage, pageSize, company.getId());
       int totalJobs = jobDAO.getAllJobs(company.getId()).size();
+      int totalViewsCount = jobDAO.getTotalViewsByCompany(company.getId());
       int totalRecords = jobDAO.getTotalJobs(searchTitle, searchLocation, company.getId());
       int totalPages = (int)Math.ceil((double)totalRecords / (double)pageSize);
        for (Job listJob : listJobs) {
@@ -43,6 +55,7 @@ public class JobManagerController extends HttpServlet {
       request.setAttribute("totalPages", totalPages);
       request.setAttribute("searchTitle", searchTitle);
       request.setAttribute("searchLocation", searchLocation);
+      request.setAttribute("totalViewsCount", totalViewsCount);
       request.getRequestDispatcher("/views/job/jobManager.jsp").forward(request, response);
    }
 

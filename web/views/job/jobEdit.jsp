@@ -51,20 +51,28 @@
                 <div class="container mx-auto px-4">
                     <div class="flex justify-between items-center h-20">
                         <div class="flex items-center">
-                            <a class="flex items-center gap-2" href="${pageContext.request.contextPath}/home">
+                            <a class="flex items-center gap-2" href="${pageContext.request.contextPath}/job-manage">
                                 <div class="w-10 h-10 bg-ptit-red rounded-full flex items-center justify-center text-white font-bold text-xl">P</div>
                                 <div class="flex flex-col">
                                     <span class="text-ptit-red font-bold text-xl leading-none">JOBS</span>
-                                    <span class="text-gray-600 text-[10px] font-medium tracking-wider uppercase">ptit.edu.vn</span>
+                                    <span class="text-gray-600 text-xs font-medium tracking-wider">PTIT.EDU.VN</span>
                                 </div>
                             </a>
                         </div>
 
                         <div class="hidden md:flex items-center gap-4">
                             <div class="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 <span class="text-gray-700 font-medium">Nhà tuyển dụng</span>
                             </div>
-                            <button class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">Đăng xuất</button>
+                            <a href="${pageContext.request.contextPath}/auth/logout" class="block w-fit">
+                                <button class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Đăng xuất
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>

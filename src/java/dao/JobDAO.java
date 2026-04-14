@@ -604,7 +604,27 @@ public class JobDAO {
 
       return list;
    }
+    public int getTotalViewsByCompany(int companyId) {
+     String sql = "SELECT SUM(ViewsCount) AS TotalViews FROM Jobs WHERE CompanyId = ?";
+     int totalViews = 0;
 
+     // Sử dụng try-with-resources để tự động đóng Connection, PreparedStatement và ResultSet
+     try (Connection conn = DBConnection.getConnection();
+          PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+         pstmt.setInt(1, companyId);
+
+         try (ResultSet rs = pstmt.executeQuery()) {
+             if (rs.next()) {
+                 totalViews = rs.getInt("TotalViews");
+             }
+         }
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+
+     return totalViews;
+ }
    public Job getJobById(int id) {
       String sql = "SELECT * FROM Jobs WHERE Id = ?";
       Job job = null;

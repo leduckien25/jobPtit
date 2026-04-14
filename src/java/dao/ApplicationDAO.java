@@ -1,5 +1,6 @@
 package dao;
 
+import config.DBConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,4 +69,5 @@ public class ApplicationDAO {
         }
         return list;
     }
+    
 }
