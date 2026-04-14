@@ -150,10 +150,10 @@
 
                
                                     <div class="md:col-span-1">
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Hạn nộp hồ sơ *</label>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Hạn nộp hồ sơ</label>
                                     <div class="relative">
                                         <input name="deadline" 
-                                               value="${not empty oldJob ? oldJob.deadline : param.deadline}" 
+                                               value="${not empty oldJob ? oldJob.expiredAt : param.expiredAt}" 
                                                type="date"
                                                class="w-full px-4 py-3 rounded-xl border ${not empty errors.deadline ? 'border-red-500' : 'border-gray-200'} outline-none focus:border-ptit-red transition cursor-pointer"
                                                id="deadline-input">

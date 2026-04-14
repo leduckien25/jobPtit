@@ -730,7 +730,7 @@ public class JobDAO {
                pstmt.setInt(4, job.getSalaryMin());
                pstmt.setInt(5, job.getSalaryMax());
                pstmt.setInt(6, job.getJobType());
-               pstmt.setInt(7, job.getStatus());
+               pstmt.setInt(7, 0);
                pstmt.setInt(8, job.getCategoryId());
                pstmt.setBoolean(9, job.getIsNegotiable());
                pstmt.setTimestamp(10, job.getExpiredAt()!= null ? Timestamp.valueOf(job.getExpiredAt()) : null);

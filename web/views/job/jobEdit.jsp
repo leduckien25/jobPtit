@@ -119,9 +119,11 @@
 
                                     <div>
                                         <label class="block text-sm font-bold text-gray-700 mb-2">Địa điểm làm việc *</label>
-                                        <input name="location" value="<c:out value='${job.location}'/>" 
-                                               class="w-full px-4 py-3 rounded-xl border ${not empty errors.location ? 'border-red-500' : 'border-gray-200'} outline-none focus:border-ptit-red transition" type="text">
-                                        <c:if test="${not empty errors.location}"><p class="text-red-500 text-xs mt-1">${errors.location}</p></c:if>
+                                        <select name="location" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-ptit-red transition appearance-none cursor-pointer">
+                                            <option value="ha-noi" ${(oldJob.location == 'ha-noi' || param['location'] == 'ha-noi') ? 'selected' : ''}>Hà Nội</option>
+                                            <option value="da-nang" ${(oldJob.location == 'da-nang' || param['location'] == 'da-nang') ? 'selected' : ''}>Đà Nẵng</option>
+                                            <option value="tp-hcm" ${(oldJob.location == 'tp-hcm' || param['location'] == 'tp-hcm') ? 'selected' : ''}>TP. Hồ Chí Minh</option>
+                                        </select>
                                     </div>
 
 
@@ -143,13 +145,13 @@
                                         </select>
                                     </div>
 
-                                    <div>
+<!--                                    <div>
                                         <label class="block text-sm font-bold text-gray-700 mb-2">Trạng thái *</label>
                                         <select name="status" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-ptit-red transition cursor-pointer">
                                             <option value="0" ${job.status == 0 ? 'selected' : ''}>Dừng hoạt động</option>
                                             <option value="1" ${job.status == 1 ? 'selected' : ''}>Hoạt động</option>
                                         </select>
-                                    </div>
+                                    </div>-->
                                     <%-- Bổ sung input Deadline --%>
                                     <div>
                                         <label class="block text-sm font-bold text-gray-700 mb-2">Hạn nộp hồ sơ</label>
