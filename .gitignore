@@ -1,2 +1,23 @@
-/build/
-/dist/
+# ===== BUILD & IDE =====
+build/
+dist/
+nbproject/
+.idea/
+*.class
+
+# ===== CONFIG (KHÔNG PUSH) =====
+src/config/
+web/META-INF/
+web/WEB-INF/
+web/WEB-INF/lib/
+
+# ===== FILE RÁC =====
+*.log
+*.tmp
+.DS_Store
+
+# ===== CHỈ GIỮ SRC + WEB =====
+!src/
+!web/
+!src/java/
+!web/views/
