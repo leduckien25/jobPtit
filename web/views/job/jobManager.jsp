@@ -73,7 +73,7 @@
                             <div class="lg:col-span-1 space-y-6">
                                 <div class="space-y-2">
                                     <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition bg-ptit-red text-white shadow-lg shadow-red-100" href="#">Tin tuyển dụng</a>
-                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="${pageContext.request.contextPath}/company">Hồ sơ công ty</a>
+                                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition text-gray-600 hover:bg-white hover:shadow-sm" href="${pageContext.request.contextPath}/recruiter/my-company">Hồ sơ công ty</a>
                                 </div>
                             </div>
 

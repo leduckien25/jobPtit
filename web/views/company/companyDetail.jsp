@@ -69,7 +69,23 @@
                         <!-- Tên công ty -->
                         <h1 class="text-4xl font-black text-gray-900 leading-tight">${company.name}</h1>
                         <!-- Tag xác thực -->
-                        <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest w-fit mx-auto md:mx-0">Đã xác thực</span>
+                        <c:choose>
+                            <c:when test="${company.isVerified == 1}">
+                                <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-[10px] font-black uppercase">
+                                    Đã xác thực
+                                </span>
+                            </c:when>
+                            <c:when test="${company.isVerified == 0}">
+                                <span class="bg-yellow-100 text-yellow-600 px-4 py-1 rounded-full text-[10px] font-black uppercase">
+                                    Chờ duyệt
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="bg-red-100 text-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase">
+                                    Bị từ chối
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <!-- Vị trí công ty -->
                     <div class="flex items-center justify-center md:justify-start gap-2 text-gray-500 mb-4">
@@ -96,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- Thông tin liên hệ (1 cột bên phải) -->
                 <div class="space-y-8">
                     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
@@ -113,6 +129,54 @@
                         </div>
                     </div>
                 </div>
+                            
+                <!-- Danh sách việc làm -->
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mt-8">
+                    <h2 class="text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-ptit-red rounded-full"></span>
+                        Việc làm đang tuyển
+                    </h2>
+
+                    <c:choose>
+                        <c:when test="${empty jobs}">
+                            <p class="text-gray-500">Hiện tại chưa có việc làm nào.</p>
+                        </c:when>
+
+                        <c:otherwise>
+                            <div class="space-y-4">
+                                <c:forEach var="job" items="${jobs}">
+                                    <div class="border rounded-xl p-5 hover:shadow-md transition">
+
+                                        <!-- Title -->
+                                        <a href="${pageContext.request.contextPath}/job?id=${job.id}"
+                                           class="text-lg font-bold text-gray-800 hover:text-ptit-red">
+                                            ${job.title}
+                                        </a>
+
+                                        <!-- Location -->
+                                        <p class="text-gray-500 mt-1">
+                                            📍 ${job.location}
+                                        </p>
+
+                                        <!-- Salary -->
+                                        <p class="text-green-600 font-semibold mt-2">
+                                            <c:choose>
+                                                <c:when test="${job.isNegotiable}">
+                                                    Thỏa thuận
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${job.salaryMin} - ${job.salaryMax} VND
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </p>
+
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                
             </div>
         </div>
     </main>
