@@ -5,6 +5,7 @@ import dao.UserDAO;
 import dao.CompanyDAO;
 import model.Job;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import model.User;
 import model.Company;
 import java.util.List;
 
+@WebServlet("/job-manage")
 public class JobManagerController extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");

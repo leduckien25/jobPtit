@@ -54,7 +54,7 @@ public class EditCompanyServlet extends HttpServlet {
             String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
 
             // đường dẫn tới thư mục uploads
-            String uploadPath = getServletContext().getRealPath("/uploads");
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
 
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdir();

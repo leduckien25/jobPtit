@@ -207,4 +207,23 @@ public class CompanyDAO {
         }
         return null;
     }
+     
+    public void update(Company c) {
+        // THÊM LogoUrl=? vào câu lệnh SQL
+        String sql = "UPDATE Companies SET Name=?, Location=?, Description=?, LogoUrl=? WHERE Id=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, c.getName());
+            ps.setString(2, c.getLocation());
+            ps.setString(3, c.getDescription());
+            ps.setString(4, c.getLogoUrl()); // Thêm dòng này để lưu đường dẫn ảnh
+            ps.setInt(5, c.getId());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
 }
