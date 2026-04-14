@@ -1,58 +1,63 @@
-
 package controller;
 
 import dao.ProfileDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.File;
 import model.CandidateProfile;
+import model.User;
 
 @WebServlet("/profile")
 @MultipartConfig
 public class ProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         
-        req.setCharacterEncoding("UTF-8"); // nhận tiếng Việt từ form
-        res.setContentType("text/html; charset=UTF-8"); // trả về tiếng Việt
-        Object uid = req.getSession().getAttribute("userId");
+        req.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html; charset=UTF-8");
 
-//        if (uid == null) {
-//            res.sendRedirect("auth");
-//            return;
-//        }
+        // Lấy User từ Session đã lưu lúc Login
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("LOGIN_USER");
 
-        int userId = (int) 1;
+        if (user == null) {
+            res.sendRedirect(req.getContextPath() + "/auth/login");
+            return;
+        }
 
         ProfileDAO dao = new ProfileDAO();
-        req.setAttribute("profile", dao.getByUserId(userId));
+        CandidateProfile profile = dao.getByUserId(user.getId());
+        
+        // Nếu chưa có profile trong DB, tạo một đối tượng rỗng để tránh lỗi JSP
+        if (profile == null) {
+            profile = new CandidateProfile();
+            profile.setFullName(""); 
+        }
 
+        req.setAttribute("profile", profile);
         req.getRequestDispatcher("/views/profile/profile.jsp").forward(req, res);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
         req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
 
-        // 🔒 check login
-//        Object uid = req.getSession().getAttribute("userId");
-//        if (uid == null) {
-//            res.sendRedirect("auth");
-//            return;
-//        }
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("LOGIN_USER");
 
-        int userId = (int) 1;
+        if (user == null) {
+            res.sendRedirect(req.getContextPath() + "/auth/login");
+            return;
+        }
 
+        int userId = user.getId();
         ProfileDAO dao = new ProfileDAO();
         CandidateProfile old = dao.getByUserId(userId);
 
@@ -64,44 +69,30 @@ public class ProfileServlet extends HttpServlet {
         p.setLocation(req.getParameter("location"));
         p.setAboutMe(req.getParameter("aboutMe"));
 
-        // 📁 THƯ MỤC UPLOAD
         String uploadPath = getServletContext().getRealPath("/uploads");
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdirs();
 
-        // ================== AVATAR ==================
-        Part avatar = req.getPart("avatar");
-        String avatarName = avatar.getSubmittedFileName();
-
-        if (avatarName != null && !avatarName.isEmpty()) {
-
-            avatarName = new File(avatarName).getName(); // 🔥 fix lỗi trình duyệt
-            String fileName = System.currentTimeMillis() + "_" + avatarName;
-
-            avatar.write(uploadPath + File.separator + fileName);
-
+        // Xử lý AVATAR
+        Part avatarPart = req.getPart("avatar");
+        if (avatarPart != null && avatarPart.getSize() > 0) {
+            String fileName = System.currentTimeMillis() + "_" + new File(avatarPart.getSubmittedFileName()).getName();
+            avatarPart.write(uploadPath + File.separator + fileName);
             p.setAvatarUrl("uploads/" + fileName);
         } else if (old != null) {
             p.setAvatarUrl(old.getAvatarUrl());
         }
 
-        // ================== CV ==================
-        Part cv = req.getPart("cv");
-        String cvName = cv.getSubmittedFileName();
-
-        if (cvName != null && !cvName.isEmpty()) {
-
-            cvName = new File(cvName).getName();
-            String fileName = System.currentTimeMillis() + "_" + cvName;
-
-            cv.write(uploadPath + File.separator + fileName);
-
+        // Xử lý CV
+        Part cvPart = req.getPart("cv");
+        if (cvPart != null && cvPart.getSize() > 0) {
+            String fileName = System.currentTimeMillis() + "_" + new File(cvPart.getSubmittedFileName()).getName();
+            cvPart.write(uploadPath + File.separator + fileName);
             p.setCvUrl("uploads/" + fileName);
         } else if (old != null) {
             p.setCvUrl(old.getCvUrl());
         }
 
-        // ================== SAVE ==================
         if (old == null) {
             dao.insert(p);
         } else {
