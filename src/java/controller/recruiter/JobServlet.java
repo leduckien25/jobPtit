@@ -1,4 +1,4 @@
-  package controller;
+  package controller.recruiter;
 
 import dao.CategoryDAO;
 import dao.JobDAO;
@@ -24,7 +24,7 @@ import model.User;
    name = "JobController",
    urlPatterns = {"/job"}
 )
-public class JobController extends HttpServlet {
+public class JobServlet extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
@@ -39,13 +39,13 @@ public class JobController extends HttpServlet {
       } else {
           System.out.println("User đang đăng nhập: " + user.getEmail());
       }
-      String url = "/views/job/jobPost.jsp";
+      String url = "/views/recruiter/job/jobPost.jsp";
       String action = request.getParameter("action");
       CategoryDAO categoryDAO = new CategoryDAO();
       List<Category> categories = categoryDAO.getAllCategories();
       request.setAttribute("categories", categories);
       if (action == null) {
-         url = "/views/job/jobPost.jsp";
+         url = "/views/recruiter/job/jobPost.jsp";
       } else if (action.equals("job-post")) {
          try {
             String title = request.getParameter("title");
@@ -78,7 +78,7 @@ public class JobController extends HttpServlet {
             if (!errors.isEmpty()) {
                request.setAttribute("errors", errors);
                request.setAttribute("oldJob", oldJob);
-               url = "/views/job/jobPost.jsp";
+               url = "/views/recruiter/job/jobPost.jsp";
             } else {
                int salaryMin = 0;
                int salaryMax = 0;
@@ -111,19 +111,19 @@ public class JobController extends HttpServlet {
                request.setAttribute("message", "Lỗi: Không thể lưu vào cơ sở dữ liệu.");
                request.setAttribute("msgType", "error");
                System.out.println("Lỗi CSDL");
-               url = "/views/job/jobPost.jsp";
+               url = "/views/recruiter/job/jobPost.jsp";
             }
          } catch (NumberFormatException var31) {
             request.setAttribute("message", "Lỗi: Mức lương phải là chữ số!");
             request.setAttribute("msgType", "error");
             System.out.println("Lỗi số lương");
-            url = "/views/job/jobPost.jsp";
+            url = "/views/recruiter/job/jobPost.jsp";
          } catch (Exception var32) {
             request.setAttribute("message", "Đã xảy ra lỗi hệ thống: " + var32.getMessage());
             request.setAttribute("msgType", "error");
             System.out.println("Lỗi hệ thống");
             var32.printStackTrace();
-            url = "/views/job/jobPost.jsp";
+            url = "/views/recruiter/job/jobPost.jsp";
          }
       }
 

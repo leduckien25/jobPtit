@@ -60,7 +60,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Việc làm đã nộp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/jobPtit/applied-jobs">Việc làm đã nộp</a></li>
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/categories">Ngành nghề</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
@@ -185,7 +185,7 @@
         </div>
     </main>
 
-    <footer class="bg-dark text-white py-5 mt-5">
+    <footer class="bg-dark text-white py-4">
         <div class="container text-center">
             <p class="mb-0 opacity-50 small">© 2026 PTIT JOBS. Developed for Learning Purposes.</p>
         </div>

@@ -81,7 +81,6 @@
     <nav class="top-navbar">
         <div class="nav-left">
             <a href="#" class="logo-area"><div class="logo-icon">P</div><div class="logo-text">JOBS<span>PTIT.EDU.VN</span></div></a>
-            <div class="nav-links"><a href="#" class="nav-link">Báo cáo hệ thống</a><a href="#" class="nav-link">Cài đặt</a></div>
         </div>
         <div class="nav-right">
             <div class="user-profile"><i class="far fa-user-circle"></i> Quản trị viên</div>

@@ -1,4 +1,4 @@
-package controller;
+package controller.recruiter;
 
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
@@ -20,7 +20,7 @@ public class CompanyListServlet extends HttpServlet {
         List<Company> list = dao.findPaged(null, null, 1, 20);
 
         req.setAttribute("companies", list);
-        req.getRequestDispatcher("/views/company/companyList.jsp")
+        req.getRequestDispatcher("/views/recruiter/company/companyList.jsp")
            .forward(req, res);
     }
 }

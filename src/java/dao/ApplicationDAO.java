@@ -7,18 +7,8 @@ import java.util.List;
 import model.Application;
 
 public class ApplicationDAO {
-    private Connection conn;
 
-    // Constructor khởi tạo kết nối MySQL
-    public ApplicationDAO() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JobPtit", "root", "Kobiethichiuhoi2@");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    
     /**
      * Hàm nộp đơn ứng tuyển: Chỉ lưu UserId và JobId.
      * CV sẽ được hệ thống tự động lấy từ bảng CandidateProfiles khi cần.
@@ -26,7 +16,8 @@ public class ApplicationDAO {
     public boolean addApplication(int userId, int jobId) {
         // Thêm cột AppliedAt với giá trị NOW() để ghi nhận thời gian nộp đơn
         String sql = "INSERT INTO Applications (UserId, JobId, Status, AppliedAt) VALUES (?, ?, 0, NOW())";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = new DBConnection().getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             ps.setInt(2, jobId);
             
@@ -50,8 +41,9 @@ public class ApplicationDAO {
                      "JOIN Companies c ON j.CompanyId = c.Id " +
                      "WHERE a.UserId = ? " +
                      "ORDER BY a.AppliedAt DESC"; // Sắp xếp đơn mới nhất lên đầu
-                     
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+         
+        try (Connection conn = new DBConnection().getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -70,4 +62,17 @@ public class ApplicationDAO {
         return list;
     }
     
+    public boolean deleteApplication(int appId, int userId) {
+        String sql = "DELETE FROM Applications WHERE id = ? AND userId = ?";
+        try (Connection conn = new DBConnection().getConnection(); 
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, appId);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -1,4 +1,4 @@
-  package controller;
+  package controller.recruiter;
 
 import dao.JobDAO;
 import dao.UserDAO;
@@ -16,7 +16,7 @@ import model.Company;
 import java.util.List;
 
 //@WebServlet("/job-manage")
-public class JobManagerController extends HttpServlet {
+public class JobManagerServlet extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
@@ -66,7 +66,7 @@ public class JobManagerController extends HttpServlet {
       request.setAttribute("searchTitle", searchTitle);
       request.setAttribute("searchLocation", searchLocation);
       request.setAttribute("totalViewsCount", totalViewsCount);
-      request.getRequestDispatcher("/views/job/jobManager.jsp").forward(request, response);
+      request.getRequestDispatcher("/views/recruiter/job/jobManager.jsp").forward(request, response);
    }
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

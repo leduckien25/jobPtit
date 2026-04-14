@@ -1,5 +1,5 @@
 
-package controller;
+package controller.recruiter;
 
 import dao.CompanyDAO;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class EditCompanyServlet extends HttpServlet {
         Company company = dao.getByUserId(user.getId());
 
         req.setAttribute("company", company);
-        req.getRequestDispatcher("/views/company/editCompany.jsp").forward(req, res);
+        req.getRequestDispatcher("/views/recruiter/company/editCompany.jsp").forward(req, res);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)

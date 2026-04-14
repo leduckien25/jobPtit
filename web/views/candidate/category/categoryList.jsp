@@ -13,7 +13,8 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         :root { --ptit-red: #da1f26; }
         body { background-color: #f8f9fa; }
@@ -24,6 +25,7 @@
         .logo-box { background: var(--ptit-red); color: white; padding: 2px 10px; border-radius: 6px; margin-right: 8px; }
         .nav-link { font-weight: 600; font-size: 1.05rem; margin: 0 10px; color: #333 !important; }
         .nav-link:hover { color: var(--ptit-red) !important; }
+
 
         
         /* Search Section */
@@ -61,17 +63,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Việc làm đã nộp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/jobPtit/applied-jobs">Việc làm đã nộp</a></li>
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/categories">Ngành nghề</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</button>
+                    <a href="${pageContext.request.contextPath}/profile" class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</a>
                     <a href="${pageContext.request.contextPath}/auth/logout" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
                 </div>
             </div>
         </div>
     </nav>
-
     
     <main class="container py-5 flex-grow-1"> 
         <div class="text-center mb-5 pb-3">
@@ -101,7 +102,7 @@
         </div>
     </main>
 
-    <footer class="bg-dark text-white py-5 mt-5">
+    <footer class="bg-dark text-white py-4">
         <div class="container text-center">
             <p class="mb-0 opacity-50 small">© 2026 PTIT JOBS. Developed for Learning Purposes.</p>
         </div>

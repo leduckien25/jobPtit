@@ -189,7 +189,7 @@ public class CompanyDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Company c = new Company();
-                c.setId(id);
+                c.setId(rs.getInt("Id"));
                 c.setName(rs.getString("Name"));
                 c.setDescription(rs.getString("Description"));
                 c.setLocation(rs.getString("Location"));

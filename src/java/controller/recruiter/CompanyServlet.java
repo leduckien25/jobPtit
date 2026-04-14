@@ -1,4 +1,4 @@
-package controller;
+package controller.recruiter;
 
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
@@ -35,7 +35,7 @@ public class CompanyServlet extends HttpServlet {
             }
 
             req.setAttribute("company", c);
-            req.getRequestDispatcher("/views/company/companyDetail.jsp")
+            req.getRequestDispatcher("/views/recruiter/company/companyDetail.jsp")
                .forward(req, res);
 
         } catch (Exception e) {

@@ -1,4 +1,4 @@
- package controller;
+ package controller.recruiter;
 
 import dao.CategoryDAO;
 import dao.JobDAO;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import model.User;
 
-public class JobEditController extends HttpServlet {
+public class JobEditServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
@@ -73,7 +73,7 @@ public class JobEditController extends HttpServlet {
             request.setAttribute("job", oldJob);
             CategoryDAO categoryDAO = new CategoryDAO();
             request.setAttribute("categories", categoryDAO.getAllCategories());
-            request.getRequestDispatcher("/views/job/jobEdit.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/recruiter/job/jobEdit.jsp").forward(request, response);
          } else {
             try {
                int id = Integer.parseInt(idStr);
@@ -130,7 +130,7 @@ public class JobEditController extends HttpServlet {
                List<Category> categories = categoryDAO.getAllCategories();
                request.setAttribute("job", job);
                request.setAttribute("categories", categories);
-               request.getRequestDispatcher("/views/job/jobEdit.jsp").forward(request, response);
+               request.getRequestDispatcher("/views/recruiter/job/jobEdit.jsp").forward(request, response);
             } else {
                session.setAttribute("message", "Lỗi: Tin tuyển dụng không tồn tại hoặc đã bị xóa.");
                session.setAttribute("msgType", "error");

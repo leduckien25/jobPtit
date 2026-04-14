@@ -1,8 +1,9 @@
+<%@page import="filter.JobFilter"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="model.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Job"%>
-<%@page import="Filter.JobFilter"%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -83,11 +84,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Việc làm đã nộp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/jobPtit/applied-jobs">Việc làm đã nộp</a></li>
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/categories">Ngành nghề</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</button>
+                    <a href="${pageContext.request.contextPath}/profile" class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</a>
                     <a href="${pageContext.request.contextPath}/auth/logout" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
                 </div>
             </div>

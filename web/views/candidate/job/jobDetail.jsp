@@ -10,6 +10,7 @@
     <title>PTIT Jobs - Chi tiết công việc</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root { --ptit-red: #da1f26; }
@@ -80,11 +81,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Việc làm đã nộp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/jobPtit/applied-jobs">Việc làm đã nộp</a></li>
                     <li class="nav-item"><a class="nav-link" href="/jobPtit/categories">Ngành nghề</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</button>
+                    <a href="${pageContext.request.contextPath}/profile" class="btn btn-outline-secondary rounded-pill px-4 me-3"><i class="fa fa-user me-2"></i>Ứng viên</a>
                     <a href="${pageContext.request.contextPath}/auth/logout" class="text-danger text-decoration-none fw-bold">Đăng xuất</a>
                 </div>
             </div>
@@ -132,7 +133,13 @@
             <div class="col-lg-4">
                 <div class="sticky-sidebar">
                     <div class="job-card p-4 mb-4 text-center">
-                        <button class="btn btn-apply w-100 mb-3 shadow">ỨNG TUYỂN NGAY</button>
+                        <form action="${pageContext.request.contextPath}/apply" method="GET">
+                            <input type="hidden" name="jobId" value="${job.id}">
+
+                            <button type="submit" class="btn btn-apply w-100 mb-3 shadow fw-bold py-3 uppercase tracking-wider">
+                                ỨNG TUYỂN NGAY
+                            </button>
+                        </form>
                         <div class="pt-3 border-top text-start small">
                         <% DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");%>                            
                             <div class="d-flex justify-content-between mb-2">

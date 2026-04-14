@@ -100,9 +100,15 @@ public class JobDAO {
         j.setCreatedByUserId(rs.getInt("CreatedByUserId"));
         j.setViewsCount(rs.getInt("ViewsCount"));
         
-        j.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
-        j.setExpiredAt(rs.getTimestamp("ExpiredAt").toLocalDateTime());
-        
+        java.sql.Timestamp createdAtTs = rs.getTimestamp("CreatedAt");
+        if (createdAtTs != null) {
+            j.setCreatedAt(createdAtTs.toLocalDateTime());
+        }
+
+        java.sql.Timestamp expiredAtTs = rs.getTimestamp("ExpiredAt");
+        if (expiredAtTs != null) {
+            j.setExpiredAt(expiredAtTs.toLocalDateTime());
+        }
         
         try { j.setCompanyName(rs.getString("CompanyName")); } catch (Exception e) {}
         try { j.setCompanyLogo(rs.getString("CompanyLogo")); } catch (Exception e) {}
@@ -420,22 +426,22 @@ public class JobDAO {
         Connection conn = (new DBConnection()).getConnection();
         
         String query = "SELECT \n" +
-"    j.Id AS JobId, \n" +
-"    j.Title, \n" +
-"    j.Description, \n" +
-"    j.Location AS JobLocation, \n" +
-"    j.SalaryMin, \n" +
-"    j.SalaryMax, \n" +
-"    j.IsNegotiable, \n" +
-"    j.CreatedAt AS JobCreatedAt,\n" +
-"    c.Id AS CompanyId, \n" +
-"    c.Name AS CompanyName, \n" +
-"    c.LogoUrl \n" +
-"FROM Jobs j \n" +
-"JOIN Companies c ON j.CompanyId = c.Id \n" +
-"WHERE j.Status = 1 AND c.IsVerified = 1 \n" +
-"ORDER BY j.CreatedAt DESC \n" +
-"LIMIT ?;";
+                        "    j.Id AS JobId, \n" +
+                        "    j.Title, \n" +
+                        "    j.Description, \n" +
+                        "    j.Location AS JobLocation, \n" +
+                        "    j.SalaryMin, \n" +
+                        "    j.SalaryMax, \n" +
+                        "    j.IsNegotiable, \n" +
+                        "    j.CreatedAt AS JobCreatedAt,\n" +
+                        "    c.Id AS CompanyId, \n" +
+                        "    c.Name AS CompanyName, \n" +
+                        "    c.LogoUrl \n" +
+                        "FROM Jobs j \n" +
+                        "JOIN Companies c ON j.CompanyId = c.Id \n" +
+                        "WHERE j.Status = 1 AND c.IsVerified = 1 \n" +
+                        "ORDER BY j.CreatedAt DESC \n" +
+                        "LIMIT ?;";
         
         PreparedStatement ps = conn.prepareStatement(query);
         

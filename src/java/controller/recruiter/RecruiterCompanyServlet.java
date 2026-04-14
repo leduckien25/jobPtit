@@ -1,4 +1,4 @@
-package controller;
+package controller.recruiter;
 
 import dao.CompanyDAO;
 import dao.JobDAO;
@@ -46,7 +46,7 @@ public class RecruiterCompanyServlet extends HttpServlet {
         req.setAttribute("company", company);
         req.setAttribute("jobs", jobs);
 
-        req.getRequestDispatcher("/views/company/myCompany.jsp")
+        req.getRequestDispatcher("/views/recruiter/company/myCompany.jsp")
                 .forward(req, res);
     }
 }
