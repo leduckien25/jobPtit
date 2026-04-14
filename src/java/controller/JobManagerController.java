@@ -15,7 +15,7 @@ import model.User;
 import model.Company;
 import java.util.List;
 
-@WebServlet("/job-manage")
+//@WebServlet("/job-manage")
 public class JobManagerController extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
