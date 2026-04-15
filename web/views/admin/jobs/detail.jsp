@@ -149,8 +149,12 @@
                             <div class="job-tag tag-salary">
                                 <i class="fas fa-dollar-sign"></i> 
                                 <c:choose>
-                                    <c:when test="${job.isNegotiable == true}">Thỏa thuận</c:when>
-                                    <c:when test="${not empty job.salaryMin}">${job.salaryMin} - ${job.salaryMax} Triệu</c:when>
+                                    <c:when test="${job.isNegotiable}">Thỏa thuận</c:when>
+                                    <c:when test="${not empty job.salaryMin and not empty job.salaryMax}">
+                                        <%-- Chia cho 1 triệu để hiển thị số nhỏ gọn --%>
+                                        <fmt:formatNumber value="${job.salaryMin / 1000000}" maxFractionDigits="1"/> - 
+                                        <fmt:formatNumber value="${job.salaryMax / 1000000}" maxFractionDigits="1"/> Triệu
+                                    </c:when>
                                     <c:otherwise>Không công bố</c:otherwise>
                                 </c:choose>
                             </div>
@@ -159,7 +163,7 @@
                             </div>
                             <div class="job-tag">
                            
-                                <fmt:parseDate value="${j.expiredAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedExpire" type="both" />
+                                <fmt:parseDate value="${job.expiredAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedExpire" type="both" />
                                 <div>Hết hạn: <fmt:formatDate value="${parsedExpire}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </div>
@@ -201,15 +205,11 @@
                 <div class="col-right">
                     <div class="info-card">
                         <div class="company-header">
-                            <div class="company-logo">
-                                <c:choose>
-                                    <c:when test="${not empty job.companyLogo}">
-                                        <img src="${job.companyLogo}" alt="Logo">
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${fn:substring(job.companyName, 0, 1)}
-                                    </c:otherwise>
-                                </c:choose>
+                           <div class="company-logo">
+                                <img src="${pageContext.request.contextPath}/${job.companyLogo}" 
+                                     alt="${job.companyName}" 
+                                     style="width: 100%; height: 100%; object-fit: contain;"
+                                     onerror="this.src='https://placehold.co/200x200?text=No+Logo'">
                             </div>
                             <div class="company-info">
                                 <h3>${job.companyName}</h3>

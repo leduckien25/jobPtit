@@ -8,10 +8,10 @@
         <servlet-name>ApplyServlet</servlet-name>
         <url-pattern>/ApplyServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
+<!--    <servlet>
         <servlet-name>JobController</servlet-name>
         <servlet-class>controller.JobController</servlet-class>
-    </servlet>
+    </servlet>-->
     <servlet>
         <servlet-name>JobManagerController</servlet-name>
         <servlet-class>controller.recruiter.JobManagerServlet</servlet-class>
@@ -20,10 +20,10 @@
         <servlet-name>JobEditController</servlet-name>
         <servlet-class>controller.recruiter.JobEditServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>JobController</servlet-name>
         <url-pattern>/job</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>JobManagerController</servlet-name>
         <url-pattern>/job-manage</url-pattern>

@@ -30,6 +30,16 @@ public class Job {
     private String companyName;
     private String companyLogo;
     private Company company;
+    private int applicationsCount;
+
+    public int getApplicationsCount() {
+        return applicationsCount;
+    }
+
+    public void setApplicationsCount(int applicationsCount) {
+        this.applicationsCount = applicationsCount;
+    }
+    
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getInstance(new Locale("vi", "VN"));
     public Job(String title, String location, String description, int salaryMax, int salaryMin, int jobType, int status, int categoryId, boolean negotiable, LocalDateTime deadline) {

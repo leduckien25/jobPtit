@@ -137,8 +137,12 @@
                                 <span><i class="fas fa-map-marker-alt"></i> ${empty j.location ? 'Chưa cập nhật' : j.location}</span>
                                 <span><i class="fas fa-dollar-sign"></i> 
                                     <c:choose>
-                                        <c:when test="${j.isNegotiable == true}">Thỏa thuận</c:when>
-                                        <c:when test="${not empty j.salaryMin}">${j.salaryMin} - ${j.salaryMax} triệu</c:when>
+                                        <c:when test="${j.isNegotiable}">Thỏa thuận</c:when>
+                                        <c:when test="${not empty j.salaryMin and not empty j.salaryMax}">
+                                            <%-- Chia cho 1 triệu để hiển thị số nhỏ gọn --%>
+                                            <fmt:formatNumber value="${j.salaryMin / 1000000}" maxFractionDigits="1"/> - 
+                                            <fmt:formatNumber value="${j.salaryMax / 1000000}" maxFractionDigits="1"/> Triệu
+                                        </c:when>
                                         <c:otherwise>Không công bố</c:otherwise>
                                     </c:choose>
                                 </span>

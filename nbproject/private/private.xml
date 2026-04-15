@@ -3,23 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/JobController.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/RecruiterCompanyServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/dao/JobDAO.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/CompanyServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/web/views/company/myCompany.jsp</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/ProfileServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/EditCompanyServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/CompanyListServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/web/views/company/editCompany.jsp</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/dao/CompanyDAO.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/web/views/candidate/job/jobList.jsp</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/model/Company.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/AuthServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/web/views/profile/profile.jsp</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/candidate/JobServlet.java</file>
-            <file>file:/C:/Users/huyle/Documents/jobPtit/src/java/controller/candidate/HomeServlet.java</file>
+            <file>file:/C:/jobPtit/src/java/config/DBConnection.java</file>
+            <file>file:/C:/jobPtit/web/views/admin/jobs/detail.jsp</file>
+            <file>file:/C:/jobPtit/web/views/recruiter/company/companyDetail.jsp</file>
+            <file>file:/C:/jobPtit/src/java/controller/admin/AdminJobServlet.java</file>
+            <file>file:/C:/jobPtit/src/java/controller/admin/AdminCompanyServlet.java</file>
+            <file>file:/C:/jobPtit/web/views/admin/jobs/list.jsp</file>
+            <file>file:/C:/jobPtit/src/java/controller/candidate/ProfileServlet.java</file>
+            <file>file:/C:/jobPtit/web/views/admin/companies/detail.jsp</file>
+            <file>file:/C:/jobPtit/web/views/admin/dashboard.jsp</file>
+            <file>file:/C:/jobPtit/web/views/recruiter/job/jobPost.jsp</file>
+            <file>file:/C:/jobPtit/src/java/controller/recruiter/JobServlet.java</file>
+            <file>file:/C:/jobPtit/src/java/controller/recruiter/JobManagerServlet.java</file>
+            <file>file:/C:/jobPtit/web/WEB-INF/web.xml</file>
+            <file>file:/C:/jobPtit/web/views/recruiter/job/jobManager.jsp</file>
+            <file>file:/C:/jobPtit/src/java/model/Job.java</file>
+            <file>file:/C:/jobPtit/web/views/recruiter/job/candidateList.jsp</file>
+            <file>file:/C:/jobPtit/src/java/controller/recruiter/CandidateManageServlet.java</file>
+            <file>file:/C:/jobPtit/src/java/model/CandidateProfile.java</file>
+            <file>file:/C:/jobPtit/src/java/dao/CategoryDAO.java</file>
+            <file>file:/C:/jobPtit/src/java/dao/CandidateDAO.java</file>
+            <file>file:/C:/jobPtit/src/java/model/ApplicationDetail.java</file>
+            <file>file:/C:/jobPtit/src/java/model/Application.java</file>
         </group>
     </open-files>
 </project-private>

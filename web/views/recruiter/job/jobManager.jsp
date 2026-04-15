@@ -118,37 +118,51 @@
                         <c:choose>
                             <c:when test="${not empty jobs}">
                                 <c:forEach items="${jobs}" var="j">
-                                    <div class="section-card hover:border-ptit-red transition group">
-                                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                            <div class="flex-grow">
-                                                <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-ptit-red transition mb-1">${j.title}</h3>
-                                                <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-500 uppercase tracking-tighter">
-                                                    <span class="flex items-center gap-1"><i class="fa fa-map-marker-alt"></i> ${j.location}</span>
-                                                    <span class="text-ptit-red"><i class="fa fa-money-bill-wave"></i> ${j.salaryRangeFormatted}</span>
-                                                    <span><i class="fa fa-clock"></i> ${j.createdAtFormatted}</span>
-                                                </div>
+                                <%-- Cấu trúc thẻ cha có sự kiện click --%>
+                                <div onclick="window.location.href='${pageContext.request.contextPath}/recruiter/candidates?jobId=${j.id}'" 
+                                     class="section-card hover:border-ptit-red hover:shadow-md transition-all group cursor-pointer relative overflow-hidden">
+
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <div class="flex-grow">
+                                            <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-ptit-red transition mb-1">${j.title}</h3>
+                                            <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-500 uppercase tracking-tighter">
+                                                <span class="flex items-center gap-1"><i class="fa fa-map-marker-alt"></i> ${j.location}</span>
+                                                <span class="text-ptit-red"><i class="fa fa-money-bill-wave"></i> ${j.salaryRangeFormatted}</span>
+                                                <span><i class="fa fa-clock"></i> ${j.createdAtFormatted}</span>
                                             </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="text-right px-4 border-r border-gray-100">
-                                                    <div class="text-lg font-black text-gray-900">${j.viewsCount}</div>
-                                                    <div class="text-[10px] font-bold text-gray-400 uppercase">Xem</div>
-                                                </div>
-                                                <div class="flex gap-2">
-                                                    <a href="${pageContext.request.contextPath}/job-edit/${j.id}" class="p-2.5 bg-gray-50 text-gray-600 rounded-lg hover:bg-ptit-hover hover:text-ptit-red transition" title="Chỉnh sửa">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <form action="${pageContext.request.contextPath}/job-manage" method="POST" onsubmit="return confirm('Xác nhận xóa bài đăng này?')" class="m-0">
-                                                        <input type="hidden" name="action" value="delete">
-                                                        <input type="hidden" name="id" value="${j.id}">
-                                                        <button type="submit" class="p-2.5 bg-gray-50 text-gray-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition" title="Xóa">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                        </div>
+
+                                        <div class="flex items-center gap-3">
+                                            <%-- GIỮ NGUYÊN LOGIC HIỂN THỊ LƯỢT XEM CỦA BẠN --%>
+                                            <div class="text-right px-4 border-r border-gray-100">
+                                                <div class="text-lg font-black text-gray-900">${j.viewsCount}</div>
+                                                <div class="text-[10px] font-bold text-gray-400 uppercase">Xem</div>
+                                            </div>
+
+                                            <%-- Các nút chức năng - Dùng stopPropagation để không bị nhảy trang khi bấm Sửa/Xóa --%>
+                                            <div class="flex gap-2 relative z-10" onclick="event.stopPropagation();">
+                                                <a href="${pageContext.request.contextPath}/job-edit/${j.id}" 
+                                                   class="p-2.5 bg-gray-50 text-gray-600 rounded-lg hover:bg-ptit-hover hover:text-ptit-red transition" 
+                                                   title="Chỉnh sửa">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+
+                                                <form action="${pageContext.request.contextPath}/job-manage" method="POST" 
+                                                      onsubmit="return confirm('Xác nhận xóa bài đăng này?')" class="m-0">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="id" value="${j.id}">
+                                                    <button type="submit" class="p-2.5 bg-gray-50 text-gray-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition" title="Xóa">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                </c:forEach>
+
+                                    <%-- Thanh trang trí chạy dưới đáy khi di chuột vào --%>
+                                    <div class="absolute bottom-0 left-0 w-0 h-1 bg-ptit-red transition-all group-hover:w-full"></div>
+                                </div>
+                            </c:forEach>
                             </c:when>
                             <c:otherwise>
                                 <div class="text-center py-20 section-card border-dashed">

@@ -53,8 +53,26 @@
 
         /* Card Header */
         .profile-header { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; display: flex; align-items: flex-start; gap: 25px; margin-bottom: 25px; }
-        .company-logo { width: 100px; height: 100px; border-radius: 12px; border: 1px solid var(--border-color); background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #cbd5e1; flex-shrink: 0; overflow: hidden;}
-        .company-logo img { width: 100%; height: 100%; object-fit: cover; }
+        .company-logo { 
+            width: 100px; 
+            height: 100px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            background: #ffffff; /* Đổi nền thành trắng để logo nổi bật */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+            overflow: hidden;
+            padding: 8px; /* Thêm khoảng trống xung quanh để logo không bị chạm mép */
+        }
+
+/* Ép ảnh thu nhỏ lại vừa vặn với khung */
+        .company-logo img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain !important; /* contain: hiển thị trọn vẹn ảnh mà không bị méo hay cắt xén */
+        }
         
         .header-info { flex: 1; }
         .header-title { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
@@ -132,7 +150,9 @@
                 <div class="company-logo">
                     <c:choose>
                         <c:when test="${not empty company.logoUrl}">
-                            <img src="${company.logoUrl}" alt="Logo">
+                            <img src="${pageContext.request.contextPath}/${company.logoUrl}" 
+                                 alt="${company.name}"
+                                 onerror="this.src='https://placehold.co/200x200?text=No+Logo'">
                         </c:when>
                         <c:otherwise>
                             <i class="far fa-building"></i>
