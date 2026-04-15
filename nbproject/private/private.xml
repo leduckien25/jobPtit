@@ -18,13 +18,12 @@
             <file>file:/C:/jobPtit/web/WEB-INF/web.xml</file>
             <file>file:/C:/jobPtit/web/views/recruiter/job/jobManager.jsp</file>
             <file>file:/C:/jobPtit/src/java/model/Job.java</file>
-            <file>file:/C:/jobPtit/web/views/recruiter/job/candidateList.jsp</file>
-            <file>file:/C:/jobPtit/src/java/controller/recruiter/CandidateManageServlet.java</file>
-            <file>file:/C:/jobPtit/src/java/model/CandidateProfile.java</file>
-            <file>file:/C:/jobPtit/src/java/dao/CategoryDAO.java</file>
-            <file>file:/C:/jobPtit/src/java/dao/CandidateDAO.java</file>
             <file>file:/C:/jobPtit/src/java/model/ApplicationDetail.java</file>
-            <file>file:/C:/jobPtit/src/java/model/Application.java</file>
+            <file>file:/C:/jobPtit/web/views/auth/login.jsp</file>
+            <file>file:/C:/jobPtit/src/java/dao/CompanyDAO.java</file>
+            <file>file:/C:/jobPtit/src/java/controller/recruiter/UpdateStatusServlet.java</file>
+            <file>file:/C:/jobPtit/src/java/dao/ApplicationDAO.java</file>
+            <file>file:/C:/jobPtit/web/views/recruiter/job/candidateList.jsp</file>
         </group>
     </open-files>
 </project-private>

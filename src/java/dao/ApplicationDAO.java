@@ -75,4 +75,19 @@ public class ApplicationDAO {
         }
         return false;
     }
+
+    public boolean updateStatus(int appId, int newStatus) {
+    String sql = "UPDATE Applications SET status = ? WHERE Id = ?";
+    try (Connection conn = new DBConnection().getConnection(); // Giả sử bạn có lớp kết nối DB
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setInt(1, newStatus);
+        ps.setInt(2, appId);
+        
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 }

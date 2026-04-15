@@ -39,13 +39,22 @@ public class JobServlet extends HttpServlet {
       } else {
           System.out.println("User đang đăng nhập: " + user.getEmail());
       }
-      String url = "/views/recruiter/job/jobPost.jsp";
+      CompanyDAO companyDAO = new CompanyDAO();
+      Company company = companyDAO.findByOwnedId(user.getId());
+      if (company == null || company.getIsVerified() != 1) {
+         session.setAttribute("message", "Công ty của bạn chưa được duyệt. Vui lòng chờ admin xét duyệt!");
+         session.setAttribute("msgType", "error");
+         response.sendRedirect(request.getContextPath() + "/job-manage");
+         return; // ← PHẢI có return
+      }
+      
+      String url = "/views/job/jobPost.jsp";
       String action = request.getParameter("action");
       CategoryDAO categoryDAO = new CategoryDAO();
       List<Category> categories = categoryDAO.getAllCategories();
       request.setAttribute("categories", categories);
       if (action == null) {
-         url = "/views/recruiter/job/jobPost.jsp";
+         url = "/views/job/jobPost.jsp";
       } else if (action.equals("job-post")) {
          try {
             String title = request.getParameter("title");
@@ -78,7 +87,7 @@ public class JobServlet extends HttpServlet {
             if (!errors.isEmpty()) {
                request.setAttribute("errors", errors);
                request.setAttribute("oldJob", oldJob);
-               url = "/views/recruiter/job/jobPost.jsp";
+               url = "/views/job/jobPost.jsp";
             } else {
                int salaryMin = 0;
                int salaryMax = 0;
@@ -92,8 +101,8 @@ public class JobServlet extends HttpServlet {
                LocalDateTime deadline = deadlineStr!= null && !deadlineStr.isEmpty() ?LocalDate.parse(deadlineStr).atStartOfDay() : null;
                Job job = new Job(title, location, description, salaryMax, salaryMin, jobType, 0, categoryId, negotiable, deadline);
                JobDAO jobDao = new JobDAO();
-               CompanyDAO companyDAO = new CompanyDAO();
-                Company company = companyDAO.findByOwnedId(user.getId());
+//               CompanyDAO companyDAO = new CompanyDAO();
+//               Company company = companyDAO.findByOwnedId(user.getId());
                 job.setCompanyId(company.getId());
                 job.setCreatedByUserId(user.getId());
                 
@@ -111,19 +120,19 @@ public class JobServlet extends HttpServlet {
                request.setAttribute("message", "Lỗi: Không thể lưu vào cơ sở dữ liệu.");
                request.setAttribute("msgType", "error");
                System.out.println("Lỗi CSDL");
-               url = "/views/recruiter/job/jobPost.jsp";
+               url = "/views/job/jobPost.jsp";
             }
          } catch (NumberFormatException var31) {
             request.setAttribute("message", "Lỗi: Mức lương phải là chữ số!");
             request.setAttribute("msgType", "error");
             System.out.println("Lỗi số lương");
-            url = "/views/recruiter/job/jobPost.jsp";
+            url = "/views/job/jobPost.jsp";
          } catch (Exception var32) {
             request.setAttribute("message", "Đã xảy ra lỗi hệ thống: " + var32.getMessage());
             request.setAttribute("msgType", "error");
             System.out.println("Lỗi hệ thống");
             var32.printStackTrace();
-            url = "/views/recruiter/job/jobPost.jsp";
+            url = "/views/job/jobPost.jsp";
          }
       }
 

@@ -92,7 +92,7 @@
                                     data-about="${not empty ad.profile.aboutMe ? fn:escapeXml(ad.profile.aboutMe) : ''}"
                                     data-avatar="${finalAvatar}"
                                     data-cv="${finalCv}"
-                                    onclick="handleRowClick(this)">
+                                    onclick="handleRowClick(this)" data-status="${ad.status}"  data-appid="${ad.appId}">
 
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
@@ -142,17 +142,25 @@
                                     </td>
 
                                     <td class="px-6 py-4 text-right" onclick="event.stopPropagation()">
-                                        <form action="${pageContext.request.contextPath}/recruiter/update-status" method="POST" class="inline">
-                                            <input type="hidden" name="appId" value="${ad.appId}">
-                                            <input type="hidden" name="jobId" value="${jobId}">
-                                            <select name="newStatus" onchange="this.form.submit()" class="text-[10px] font-bold bg-gray-100 rounded p-1.5 border-none outline-none focus:ring-1 focus:ring-red-500">
-                                                <option value="0" ${ad.status == 0 ? 'selected' : ''}>Chờ duyệt</option>
-                                                <option value="1" ${ad.status == 1 ? 'selected' : ''}>Đã xem</option>
-                                                <option value="2" ${ad.status == 2 ? 'selected' : ''}>Phỏng vấn</option>
-                                                <option value="3" ${ad.status == 3 ? 'selected' : ''}>Từ chối</option>
-                                                <option value="4" ${ad.status == 4 ? 'selected' : ''}>Nhận</option>
-                                            </select>
-                                        </form>
+                                        <div class="mb-6 p-4 bg-red-50 rounded-2xl border border-red-100">
+                                            <label class="text-[10px] font-bold text-red-400 uppercase block mb-2">Cập nhật trạng thái ứng tuyển</label>
+                                            <form action="${pageContext.request.contextPath}/recruiter/update-status" method="POST" class="flex gap-2">
+                                                <input type="hidden" name="jobId" value="${jobId}">
+                                                <input type="hidden" name="appId" value="${ad.appId}">
+                                                
+                                                <select name="newStatus" class="flex-grow bg-white border-none rounded-xl px-4 py-2.5 text-sm font-bold shadow-sm focus:ring-2 focus:ring-red-500 outline-none">
+                                                    <option value="0" ${ad.status == 0 ? 'selected' : ''}>Chờ duyệt</option>
+                                                    <option value="1" ${ad.status == 1 ? 'selected' : ''}>Đã xem</option>
+                                                    <option value="2" ${ad.status == 2 ? 'selected' : ''}>Phỏng vấn</option>
+                                                    <option value="3" ${ad.status == 3 ? 'selected' : ''}>Từ chối</option>
+                                                    <option value="4" ${ad.status == 4 ? 'selected' : ''}>Nhận</option>
+                                                </select>
+
+                                                <button type="submit" class="bg-gray-900 text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-black transition">
+                                                    Lưu
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -184,6 +192,22 @@
                         <p id="mTi" class="ptit-red font-bold text-xs uppercase tracking-wider"></p>
                     </div>
                 </div>
+
+                <div class="mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-2">Trạng thái ứng tuyển</label>
+                    <form action="${pageContext.request.contextPath}/recruiter/update-status" method="POST" class="flex gap-2">
+                        <input type="hidden" name="appId" id="mInpAppId">
+                        <input type="hidden" name="jobId" value="${jobId}"> <select name="newStatus" id="mInpStatus" class="flex-grow bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm font-bold outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="0">Chờ duyệt</option>
+                            <option value="1">Đang xem</option>
+                            <option value="2">Phỏng vấn</option>
+                            <option value="3">Từ chối</option>
+                            <option value="4">Đã nhận</option>
+                        </select>
+                        <button type="submit" class="bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-black transition">Lưu</button>
+                    </form>
+                </div>
+
                 <div class="grid grid-cols-2 gap-4 mb-6 text-sm text-gray-600 border-y py-4">
                     <div><i class="fa fa-envelope ptit-red mr-2 w-4"></i><span id="mEm"></span></div>
                     <div><i class="fa fa-phone ptit-red mr-2 w-4"></i><span id="mPh"></span></div>
@@ -209,6 +233,31 @@
             document.getElementById('mTi').innerText = data.title || 'CHƯA CẬP NHẬT';
             document.getElementById('mEm').innerText = data.email;
             document.getElementById('mPh').innerText = data.phone || 'N/A';
+            document.getElementById('mAb').innerText = data.about || 'Ứng viên chưa viết giới thiệu.';
+            document.getElementById('mAv').src = data.avatar;
+            document.getElementById('mCv').href = data.cv;
+
+            // ĐIỀN DỮ LIỆU VÀO FORM TRONG MODAL
+            document.getElementById('mInpAppId').value = data.appid;
+            document.getElementById('mInpStatus').value = data.status;
+
+            document.getElementById('m').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('m').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+
+    <script>
+        function handleRowClick(row) {
+            const data = row.dataset;
+            document.getElementById('mNa').innerText = data.name;
+            document.getElementById('mTi').innerText = data.title || 'CHƯA CẬP NHẬT';
+            document.getElementById('mEm').innerText = data.email;
+            document.getElementById('mPh').innerText = data.phone || 'N/A';
             document.getElementById('mAb').innerText = data.about || 'Ứng viên này chưa viết giới thiệu bản thân.';
             document.getElementById('mAv').src = data.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.name);
             document.getElementById('mCv').href = data.cv;
@@ -221,6 +270,7 @@
             document.getElementById('m').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
+        
     </script>
 </body>
 </html>
