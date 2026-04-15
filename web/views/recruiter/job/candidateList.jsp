@@ -56,7 +56,7 @@
                             <tr>
                                 <th class="px-6 py-4">Ứng viên</th>
                                 <th class="px-6 py-4 text-center">Ngày nộp</th>
-                                <th class="px-6 py-4 text-center">Trạng thái</th>
+                                
                                 <th class="px-6 py-4 text-center">Hồ sơ (CV)</th>
                                 <th class="px-6 py-4 text-right">Hành động</th>
                             </tr>
@@ -109,22 +109,7 @@
                                         ${ad.appliedAtFormatted}
                                     </td>
 
-                                    <td class="px-6 py-4 text-center">
-                                        <c:choose>
-                                            <c:when test="${ad.status == 0}">
-                                                <span class="px-2 py-1 rounded bg-yellow-50 text-yellow-600 text-[10px] font-bold uppercase tracking-wider">Mới nộp</span>
-                                            </c:when>
-                                            <c:when test="${ad.status == 3}">
-                                                <span class="px-2 py-1 rounded bg-red-50 text-red-600 text-[10px] font-bold uppercase tracking-wider">Từ chối</span>
-                                            </c:when>
-                                            <c:when test="${ad.status == 4}">
-                                                <span class="px-2 py-1 rounded bg-green-50 text-green-600 text-[10px] font-bold uppercase tracking-wider">Đã nhận</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="px-2 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider">Đang xem</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
+                                    
 
                                     <td class="px-6 py-4 text-center" onclick="event.stopPropagation()">
                                         <%-- Hiển thị nút XEM CV ở bảng ngoài --%>

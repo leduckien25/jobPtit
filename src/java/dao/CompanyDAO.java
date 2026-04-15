@@ -226,4 +226,23 @@ public class CompanyDAO {
             e.printStackTrace();
         }
 }
+
+    public boolean existsByName(String companyName) throws SQLException {
+       String sql = "SELECT * FROM companies where Name = ?";
+       
+       try(Connection conn = new DBConnection().getConnection()){
+           PreparedStatement ps = conn.prepareStatement(sql);
+           ps.setString(1, companyName);
+           
+           ResultSet rs = ps.executeQuery();
+           
+           if(rs.next()){
+               return true;
+           }
+           return false;
+       }
+       catch(Exception e){
+           return false;
+       }
+    }
 }

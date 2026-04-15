@@ -34,7 +34,7 @@
         .main-content { flex: 1; padding: 30px 40px; }
 
         /* 1. Stats Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; }
         .stat-num { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
         .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
@@ -112,10 +112,7 @@
                     <div class="stat-num" style="color: var(--success);"><fmt:formatNumber value="${activeJobs}"/></div>
                     <div class="stat-label">Tổng bài đăng (Active)</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-num">10K+</div>
-                    <div class="stat-label">Ứng viên đã đăng ký</div>
-                </div>
+               
             </div>
 
             <h3 class="section-title">Tin tuyển dụng mới nhất</h3>

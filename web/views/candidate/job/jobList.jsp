@@ -216,9 +216,9 @@
                                     </div>
                                     <div class="text-md-end mt-3 mt-md-0">
                                         <%
-                                            if(job.getSalaryMax() != null && job.getSalaryMin() != null){
+                                            if(!(job.getIsNegotiable() || job.getSalaryMin() == null)){
                                         %>
-                                               <span class="h5 fw-bold text-success d-block mb-2"><%= job.getSalaryMin() %> - <%= job.getSalaryMax() %> Triệu
+                                               <span class="h5 fw-bold text-success d-block mb-2"><%= job.getSalaryMin()/1000000 %> - <%= job.getSalaryMax()/1000000 %> Triệu
                                         <%    }
                                             else{
                                         %>

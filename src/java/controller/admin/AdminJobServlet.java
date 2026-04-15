@@ -42,7 +42,7 @@ public class AdminJobServlet extends HttpServlet {
         String statusStr = req.getParameter("status"); 
         int page         = intParam(req, "page", 1);
 
-        // Chuyển statusStr thành số (0=Pending, 1=Active, 2=Expired, 3=Rejected)
+
         Integer status = parseStatus(statusStr);
         
         List<Job> list = dao.findPaged(keyword, status, page, PAGE_SIZE);
@@ -56,7 +56,7 @@ public class AdminJobServlet extends HttpServlet {
         req.setAttribute("keyword",    keyword);
         req.setAttribute("statusStr",  statusStr);
 
-        // Trỏ về đúng thư mục chứa giao diện (Rút kinh nghiệm lỗi 404 lần trước nhé!)
+
         req.getRequestDispatcher("/views/admin/jobs/list.jsp").forward(req, resp);
     }
 

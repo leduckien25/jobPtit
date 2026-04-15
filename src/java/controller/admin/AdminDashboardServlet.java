@@ -30,8 +30,7 @@ public class AdminDashboardServlet extends HttpServlet {
         int pendingCompanies = companyDAO.countByStatus(0); // Công ty chờ xác thực (IsVerified = 0)
         int activeJobs = jobDAO.countPaged(null, 1);        // Tổng bài đăng (Status = 1)
         
-        // (Tạm thời để số lượng ứng viên là fix cứng, bạn có thể tự viết UserDAO.countRole(1) sau)
-        int totalCandidates = 10250; 
+        
 
         int page = 1;
         try {
@@ -50,7 +49,7 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("pendingJobs", pendingJobs);
         request.setAttribute("pendingCompanies", pendingCompanies);
         request.setAttribute("activeJobs", activeJobs);
-        request.setAttribute("totalCandidates", totalCandidates);
+        
         
         request.setAttribute("recentJobs", recentJobs);
         request.setAttribute("page", page);

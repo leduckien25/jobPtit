@@ -8,7 +8,7 @@ import java.io.IOException;
 import model.Company;
 import model.User;
 
-@WebServlet("/company")
+@WebServlet("/companies/*")
 public class CompanyServlet extends HttpServlet {
 
     @Override
@@ -16,7 +16,9 @@ public class CompanyServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String idParam = req.getParameter("id");
+            
+            String idParam = req.getPathInfo().substring(1);
+
 
             if (idParam == null) {
                 res.sendError(404);
@@ -35,7 +37,7 @@ public class CompanyServlet extends HttpServlet {
             }
 
             req.setAttribute("company", c);
-            req.getRequestDispatcher("/views/recruiter/company/companyDetail.jsp")
+            req.getRequestDispatcher("/views/candidate/company/companyDetail.jsp")
                .forward(req, res);
 
         } catch (Exception e) {

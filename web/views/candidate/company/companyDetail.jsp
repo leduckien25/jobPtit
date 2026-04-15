@@ -155,15 +155,7 @@
                                 </div>
                             </div>
                             
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-ptit-red flex-shrink-0">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                                <div>
-                                    <span class="block text-[10px] font-black text-gray-400 uppercase">Website</span>
-                                    <a href="#" class="text-blue-600 font-bold text-sm hover:underline italic underline-offset-4">đang cập nhật...</a>
-                                </div>
-                            </div>
+                            
 
                             <div class="flex items-start gap-4">
                                 <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-ptit-red flex-shrink-0">

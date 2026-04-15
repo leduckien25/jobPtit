@@ -4,6 +4,7 @@
  */
 package controller.auth;
 
+import dao.CompanyDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import model.User;
 
 
@@ -47,12 +49,18 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // Hỗ trợ tiếng Việt khi submit form
         req.setCharacterEncoding("UTF-8");
         
         switch (action(req)) {
             case "login"    -> Login(req, resp);
-            case "register" -> Register(req, resp);
+            case "register" -> {
+                try {
+                    Register(req, resp);
+                } catch (SQLException ex) {
+                    System.getLogger(AuthServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+            }
+
             default         -> resp.sendRedirect(req.getContextPath() + "/auth/login");
         }
     }
@@ -144,7 +152,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     private void Register(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
 
         String email     = trim(req.getParameter("email"));
         String password  = req.getParameter("password");
@@ -176,6 +184,12 @@ public class AuthServlet extends HttpServlet {
         // Kiểm tra trùng Email
         if (userDAO.existsByEmail(email)) {
             error(req, resp, "Email này đã được đăng ký!", "/views/auth/register.jsp");
+            return;
+        }
+        
+        CompanyDAO companyDAO = new CompanyDAO();
+        if(companyDAO.existsByName(companyName)){
+            error(req,resp, "Tên công ty đã tồn tai!", "/views/auth/register.jsp");
             return;
         }
 
