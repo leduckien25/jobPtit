@@ -123,11 +123,18 @@
                                     <div>
                                         <label class="block text-sm font-bold text-gray-700 mb-2">Địa điểm làm việc *</label>
                                         <select name="location" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-ptit-red transition appearance-none cursor-pointer">
-                                            <option value="ha-noi" ${(oldJob.location == 'ha-noi' || param['location'] == 'ha-noi') ? 'selected' : ''}>Hà Nội</option>
-                                            <option value="da-nang" ${(oldJob.location == 'da-nang' || param['location'] == 'da-nang') ? 'selected' : ''}>Đà Nẵng</option>
-                                            <option value="tp-hcm" ${(oldJob.location == 'tp-hcm' || param['location'] == 'tp-hcm') ? 'selected' : ''}>TP. Hồ Chí Minh</option>
+                                            <option value="Hà Nội" ${(oldJob.location == 'Hà Nội' || param['location'] == 'ha-noi') ? 'selected' : ''}>
+                                                Hà Nội
+                                            </option>
+                                            <option value="Đà Nẵng" ${(oldJob.location == 'Đà Nẵng' || param['location'] == 'da-nang') ? 'selected' : ''}>
+                                                Đà Nẵng
+                                            </option>
+                                            <option value="TP. Hồ Chí Minh" ${(oldJob.location == 'TP. Hồ Chí Minh' || param['location'] == 'tp-hcm') ? 'selected' : ''}>
+                                                TP. Hồ Chí Minh
+                                            </option>
                                         </select>
                                     </div>
+                                                
                                     <div>
                                         <label class="block text-sm font-bold text-gray-700 mb-2">Hình thức làm việc *</label>
                                         <select name="job-type" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-ptit-red transition appearance-none cursor-pointer">

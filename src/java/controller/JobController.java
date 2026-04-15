@@ -1,4 +1,4 @@
-  package controller;
+  package controller.recruiter;
 
 import dao.CategoryDAO;
 import dao.JobDAO;
@@ -24,7 +24,7 @@ import model.User;
    name = "JobController",
    urlPatterns = {"/job"}
 )
-public class JobController extends HttpServlet {
+public class JobServlet extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
       response.setCharacterEncoding("UTF-8");
@@ -39,6 +39,15 @@ public class JobController extends HttpServlet {
       } else {
           System.out.println("User đang đăng nhập: " + user.getEmail());
       }
+      CompanyDAO companyDAO = new CompanyDAO();
+      Company company = companyDAO.findByOwnedId(user.getId());
+      if (company == null || company.getIsVerified() != 1) {
+         session.setAttribute("message", "Công ty của bạn chưa được duyệt. Vui lòng chờ admin xét duyệt!");
+         session.setAttribute("msgType", "error");
+         response.sendRedirect(request.getContextPath() + "/job-manage");
+         return; // ← PHẢI có return
+      }
+      
       String url = "/views/job/jobPost.jsp";
       String action = request.getParameter("action");
       CategoryDAO categoryDAO = new CategoryDAO();
@@ -92,8 +101,8 @@ public class JobController extends HttpServlet {
                LocalDateTime deadline = deadlineStr!= null && !deadlineStr.isEmpty() ?LocalDate.parse(deadlineStr).atStartOfDay() : null;
                Job job = new Job(title, location, description, salaryMax, salaryMin, jobType, 0, categoryId, negotiable, deadline);
                JobDAO jobDao = new JobDAO();
-               CompanyDAO companyDAO = new CompanyDAO();
-                Company company = companyDAO.findByOwnedId(user.getId());
+//               CompanyDAO companyDAO = new CompanyDAO();
+//               Company company = companyDAO.findByOwnedId(user.getId());
                 job.setCompanyId(company.getId());
                 job.setCreatedByUserId(user.getId());
                 

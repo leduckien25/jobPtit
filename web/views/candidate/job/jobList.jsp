@@ -1,8 +1,9 @@
+<%@page import="filter.JobFilter"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="model.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Job"%>
-<%@page import="Filter.JobFilter"%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">

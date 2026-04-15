@@ -12,6 +12,7 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.File;
 import model.CandidateProfile;
+import model.User;
 
 @WebServlet("/profile")
 @MultipartConfig
@@ -22,14 +23,15 @@ public class ProfileServlet extends HttpServlet {
         
         req.setCharacterEncoding("UTF-8"); // nhận tiếng Việt từ form
         res.setContentType("text/html; charset=UTF-8"); // trả về tiếng Việt
-        Object uid = req.getSession().getAttribute("userId");
-
-//        if (uid == null) {
-//            res.sendRedirect("auth");
-//            return;
-//        }
-
-        int userId = (int) 1;
+        User user = (User) req.getSession().getAttribute("LOGIN_USER");
+        
+        if (user == null) {
+            // Sửa lại đường link redirect cho chuẩn tuyệt đối, tránh lỗi 404
+            res.sendRedirect(req.getContextPath() + "/auth/login");
+            return;
+        }
+        
+        int userId = user.getId();
 
         ProfileDAO dao = new ProfileDAO();
         req.setAttribute("profile", dao.getByUserId(userId));
@@ -44,14 +46,15 @@ public class ProfileServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
 
-        // 🔒 check login
-//        Object uid = req.getSession().getAttribute("userId");
-//        if (uid == null) {
-//            res.sendRedirect("auth");
-//            return;
-//        }
-
-        int userId = (int) 1;
+        User user = (User) req.getSession().getAttribute("LOGIN_USER");
+        
+        if (user == null) {
+            // Sửa lại đường link redirect cho chuẩn tuyệt đối, tránh lỗi 404
+            res.sendRedirect(req.getContextPath() + "/auth/login");
+            return;
+        }
+        
+        int userId = user.getId();
 
         ProfileDAO dao = new ProfileDAO();
         CandidateProfile old = dao.getByUserId(userId);
