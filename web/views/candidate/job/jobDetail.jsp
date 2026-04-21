@@ -136,9 +136,10 @@
                         <form action="${pageContext.request.contextPath}/apply" method="GET">
                             <input type="hidden" name="jobId" value="${job.id}">
 
-                            <button type="submit" class="btn btn-apply w-100 mb-3 shadow fw-bold py-3 uppercase tracking-wider">
-                                ỨNG TUYỂN NGAY
-                            </button>
+                            <a href="${pageContext.request.contextPath}/apply?jobId=<%=job.getId()%>&jobTitle=<%=java.net.URLEncoder.encode(job.getTitle(), "UTF-8")%>&companyName=<%=java.net.URLEncoder.encode(job.getCompany().getName(), "UTF-8")%>" 
+                            class="btn btn-apply w-100 py-3 text-white text-decoration-none d-block">
+                            ỨNG TUYỂN NGAY
+                            </a>
                         </form>
                         <div class="pt-3 border-top text-start small">
                         <% DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");%>                            
