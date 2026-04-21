@@ -51,7 +51,7 @@ public class ApplyServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/applied-jobs");
             } else {
                 // Thất bại (Ví dụ: Đã nộp rồi): Thông báo lại tại trang form
-                request.setAttribute("msg", "Bạn đã ứng tuyển công việc này trước đó hoặc hệ thống bận.");
+                request.setAttribute("msg", "Bạn đã ứng tuyển công việc này trước đó rồi.");
                 request.getRequestDispatcher("/views/candidate/job/applyJob.jsp").forward(request, response);
             }
         } catch (Exception e) {
