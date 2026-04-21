@@ -101,6 +101,11 @@
                         <i class="fa fa-xmark mr-1"></i> Hủy bỏ
                     </a>
                 </div>
+                <form action="..." method="post">
+                <input type="hidden" name="jobId" value="${param.jobId}">
+                <input type="hidden" name="jobTitle" value="${param.jobTitle}">
+                <input type="hidden" name="companyName" value="${param.companyName}">
+                </form>
             </form>
             
             <c:if test="${not empty msg}">
