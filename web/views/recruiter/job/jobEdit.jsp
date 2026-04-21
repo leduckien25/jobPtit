@@ -137,11 +137,21 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối thiểu (VNĐ)</label>
                             <input name="salary-min" type="number" value="${job.salaryMin != 0 ? job.salaryMin : ''}"
                                    class="salary-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none">
+                            <c:if test="${not empty errors.salaryMin}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.salaryMin}
+                                </p>
+                            </c:if>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối đa (VNĐ)</label>
                             <input name="salary-max" type="number" value="${job.salaryMax != 0 ? job.salaryMax : ''}"
                                    class="salary-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none">
+                            <c:if test="${not empty errors.salaryMax}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.salaryMax}
+                                </p>
+                            </c:if>
                         </div>
                     </div>
                 </div>

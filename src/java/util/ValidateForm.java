@@ -36,7 +36,7 @@ public class ValidateForm {
       if (location == null || location.trim().isEmpty()) {
          errors.put("location", "Địa điểm không được để trống");
       }
-
+      
       if (deadlineStr != null && !deadlineStr.isEmpty()) {
          try {
             LocalDate deadline = LocalDate.parse(deadlineStr);
@@ -47,6 +47,8 @@ public class ValidateForm {
          } catch (DateTimeParseException var9) {
             errors.put("deadline", "Định dạng ngày không hợp lệ");
          }
+      } else {
+            errors.put("deadline", "Hạn nộp hồ sơ không được để trống");
       }
 
       if (!"on".equals(negotiableStr)) {

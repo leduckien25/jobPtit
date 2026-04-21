@@ -80,6 +80,11 @@
                             <input name="title" value="${not empty oldJob ? oldJob.title : param.title}" 
                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red focus:border-ptit-red outline-none transition" 
                                    type="text" placeholder="Ví dụ: Java Backend Developer (Junior/Senior)">
+                            <c:if test="${not empty errors.title}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.title}
+                                </p>
+                            </c:if>
                         </div>
 
                         <div>
@@ -94,9 +99,9 @@
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Hình thức làm việc <span class="text-ptit-red">*</span></label>
                             <select name="job-type" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none cursor-pointer bg-white">
-                                <option value="1">Toàn thời gian (Full-time)</option>
-                                <option value="2">Bán thời gian (Part-time)</option>
-                                <option value="3">Thực tập (Internship)</option>
+                                <option value="1" ${oldJob.jobType == 1 ? 'selected' : ''}>Toàn thời gian (Full-time)</option>
+                                <option value="2" ${oldJob.jobType == 2 ? 'selected' : ''}>Bán thời gian (Part-time)</option>
+                                <option value="3" ${oldJob.jobType == 3 ? 'selected' : ''}>Thực tập (Internship)</option>
                             </select>
                         </div>
 
@@ -104,7 +109,7 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2">Loại hình công việc <span class="text-ptit-red">*</span></label>
                             <select name="category" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none cursor-pointer bg-white">
                                 <c:forEach items="${categories}" var="cat">
-                                    <option value="${cat.id}">${cat.name}</option>
+                                    <option value="${cat.id}" ${oldJob.categoryId == cat.id ? 'selected' : ''}>${cat.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -113,6 +118,11 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2">Hạn nộp hồ sơ <span class="text-ptit-red">*</span></label>
                             <input name="deadline" type="date" id="deadline-input" 
                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none cursor-pointer">
+                            <c:if test="${not empty errors.deadline}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.deadline}
+                                </p>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -124,6 +134,7 @@
                     
                     <div class="flex items-center gap-2 mb-6">
                         <input id="negotiable" name="negotiable" type="checkbox" onchange="toggleSalaryInputs(this.checked)"
+                               ${oldJob.isNegotiable == true ? 'checked' : ''}
                                class="w-5 h-5 accent-ptit-red cursor-pointer">
                         <label for="negotiable" class="text-gray-700 font-bold cursor-pointer">Mức lương thỏa thuận</label>
                     </div>
@@ -133,11 +144,21 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối thiểu (VNĐ)</label>
                             <input name="salary-min" type="number" placeholder="10.000.000"
                                    class="salary-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none">
+                            <c:if test="${not empty errors.salaryMin}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.salaryMin}
+                                </p>
+                            </c:if>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối đa (VNĐ)</label>
                             <input name="salary-max" type="number" placeholder="20.000.000"
                                    class="salary-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-ptit-red outline-none">
+                            <c:if test="${not empty errors.salaryMax}">
+                                <p class="mt-1 text-sm text-red-600 animate-pulse">
+                                    <i class="fas fa-exclamation-circle mr-1"></i> ${errors.salaryMax}
+                                </p>
+                            </c:if>
                         </div>
                     </div>
                 </div>
