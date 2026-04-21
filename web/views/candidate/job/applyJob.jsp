@@ -54,12 +54,13 @@
                 </div>
                 
                 <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-6 group transition-all">
-                    <span class="block text-lg font-extrabold text-gray-800 leading-tight mb-1">
-                        ${param.jobTitle}
-                    </span>
-                    <span class="block text-sm font-bold text-ptit-red uppercase tracking-wider">
-                        <i class="fa fa-building mr-1"></i> ${param.companyName}
-                    </span>
+                  <span class="block text-lg font-extrabold text-gray-800 leading-tight mb-1">
+                  <c:out value="${param.jobTitle}" default="Đang tải thông tin công việc..." />
+                  </span>
+                  <span class="block text-sm font-bold text-ptit-red uppercase tracking-wider">
+                  <i class=""></i> 
+                  <c:out value="${param.companyName}" default="Tên công ty" />
+                  </span>
                 </div>
 
                 <input type="hidden" name="jobId" value="${param.jobId}">
@@ -67,7 +68,7 @@
                 <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-8 flex gap-3 text-left">
                     <i class="fa fa-circle-info text-blue-500 mt-1"></i>
                     <p class="text-xs font-medium text-blue-700 leading-relaxed">
-                        Hệ thống sẽ tự động gửi hồ sơ cá nhân (Họ tên, SĐT, Email, CV) của bạn đến Nhà tuyển dụng này.
+                        Hệ thống sẽ tự động gửi hồ sơ cá nhân của bạn đến Nhà tuyển dụng này.
                     </p>
                 </div>
 
