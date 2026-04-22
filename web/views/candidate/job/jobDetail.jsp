@@ -97,9 +97,10 @@
             <div class="col-lg-8">
                 <div class="job-card p-4 mb-4">
                     <h1 class="fw-bold h2 mb-2"><%=job.getTitle()%></h1>
-                    <a href="#" class="text-decoration-none text-muted fs-5 mb-4 d-block">
-                        <%= job.getCompany().getName() %>
-                    </a>
+                    <a href="<%=request.getContextPath()%>/company?id=<%=job.getCompany().getId()%>"
+                        class="text-decoration-none text-muted fs-5 mb-4 d-block">
+                         <%= job.getCompany().getName() %>
+                     </a>
                     <div class="d-flex gap-4 border-top pt-3">
                         <div>
                             <small class="text-muted d-block">Lương</small>
